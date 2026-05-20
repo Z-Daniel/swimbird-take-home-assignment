@@ -1,5 +1,5 @@
 import { DOCUMENT } from '@angular/common';
-import { effect, inject, Injectable, signal } from '@angular/core';
+import { computed, effect, inject, Injectable, signal } from '@angular/core';
 
 export type Theme = 'light' | 'dark' | 'system';
 export type Density = 'compact' | 'default' | 'comfortable';
@@ -13,6 +13,12 @@ export class SettingsService {
   readonly theme = signal<Theme>('system');
   readonly density = signal<Density>('default');
   readonly currency = signal<Currency>('SEK');
+
+  readonly isDark = computed(() => {
+    const theme = this.theme();
+    const systemDark = this.systemDark();
+    return theme === 'dark' || (theme === 'system' && systemDark);
+  });
 
   constructor() {
     this.initSystemDark();
