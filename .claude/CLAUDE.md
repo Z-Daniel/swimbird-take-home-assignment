@@ -49,6 +49,7 @@ You are an expert in TypeScript, Angular, and scalable web application developme
 - Use native control flow (`@if`, `@for`, `@switch`) instead of `*ngIf`, `*ngFor`, `*ngSwitch`
 - Use the async pipe to handle observables
 - Do not assume globals like (`new Date()`) are available.
+- When a signal is read more than once in a template, declare a local variable with `@let` at the top of the template (e.g. `@let a = account();`). Each signal call is a function invocation — `@let` avoids redundant calls and makes the template easier to read.
 
 ## Services
 

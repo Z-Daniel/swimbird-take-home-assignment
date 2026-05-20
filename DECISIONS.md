@@ -4,6 +4,20 @@ Running log of deliberate choices made during development. Intended as source ma
 
 ---
 
+## Template signal reads — `@let`
+
+When a signal is read more than once in a template, we declare a local variable using Angular's `@let` syntax at the top of the template:
+
+```html
+@let a = account();
+<h1>{{ a.name }}</h1>
+<p>{{ a.type }} · {{ a.currency }}</p>
+```
+
+Each signal call (`account()`) is a function invocation. Repeating it is wasteful and obscures intent. `@let` reads the signal once, names the result clearly, and lets the rest of the template work with a plain object. This applies to both signal inputs and computed signals — anything that is called as a function in the template.
+
+---
+
 ## Dashboard — Accounts table
 
 ### Currency column

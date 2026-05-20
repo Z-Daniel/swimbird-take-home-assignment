@@ -8,10 +8,12 @@ import { SkeletonListComponent } from './skeleton-list.component';
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [SkeletonListComponent, ErrorMessageComponent, EmptyStateComponent],
   template: `
-    <section [attr.aria-labelledby]="headingId()">
-      <h2 [id]="headingId()" class="mb-4 text-lg font-semibold text-(--color-text)">
-        {{ title() }}
-      </h2>
+    <section [attr.aria-labelledby]="headingId() ?? null">
+      @if (title()) {
+        <h2 [id]="headingId()" class="mb-4 text-lg font-semibold text-(--color-text)">
+          {{ title() }}
+        </h2>
+      }
 
       @if (loading()) {
         <app-skeleton-list />
@@ -30,14 +32,15 @@ import { SkeletonListComponent } from './skeleton-list.component';
   `,
 })
 export class SectionShellComponent {
-  readonly title = input.required<string>();
+  readonly title = input<string>('');
   readonly loading = input.required<boolean>();
   readonly error = input<string | null>(null);
   readonly empty = input.required<boolean>();
   readonly emptyMessage = input('No data found.');
   readonly retry = output<void>();
 
-  protected readonly headingId = computed(() =>
-    `${this.title().toLowerCase().replace(/\s+/g, '-')}-heading`,
-  );
+  protected readonly headingId = computed(() => {
+    const title = this.title();
+    return title ? `${title.toLowerCase().replace(/\s+/g, '-')}-heading` : undefined;
+  });
 }
