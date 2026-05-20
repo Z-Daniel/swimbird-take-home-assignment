@@ -33,6 +33,7 @@ You are an expert in TypeScript, Angular, and scalable web application developme
 - Do NOT use `ngClass`, use `class` bindings instead
 - Do NOT use `ngStyle`, use `style` bindings instead
 - When using external templates/styles, use paths relative to the component TS file.
+- Member visibility: `input()`, `output()`, and any members accessed by a parent component are `public`; members accessed only in the template are `protected`; all other members are `private`
 
 ## State Management
 
