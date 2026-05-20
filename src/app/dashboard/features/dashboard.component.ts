@@ -8,9 +8,13 @@ import { PerformanceSectionComponent } from './performance-section.component';
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [AccountsSectionComponent, TopHoldingsSectionComponent, PerformanceSectionComponent],
   template: `
-    <app-performance-section />
-    <app-top-holdings-section />
-    <app-accounts-section />
+    <div class="flex flex-col gap-6">
+      <div class="grid grid-cols-1 gap-6 lg:grid-cols-[3fr_2fr]">
+        <app-performance-section />
+        <app-top-holdings-section />
+      </div>
+      <app-accounts-section />
+    </div>
   `,
 })
 export class DashboardComponent {}
