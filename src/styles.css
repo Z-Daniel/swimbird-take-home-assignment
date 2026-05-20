@@ -2,3 +2,35 @@
 
 /* Class-based dark mode — SettingsService applies .dark to <html> */
 @custom-variant dark (&:where(.dark, .dark *));
+
+/* Light theme (default) */
+:root {
+  --color-bg: #ffffff;
+  --color-surface: #f8fafc;
+  --color-border: #e2e8f0;
+  --color-text: #0f172a;
+  --color-text-muted: #64748b;
+
+  --density-gap: 1rem;
+  --density-padding: 1rem;
+}
+
+/* Dark theme */
+.dark {
+  --color-bg: #020617;
+  --color-surface: #0f172a;
+  --color-border: #1e293b;
+  --color-text: #f8fafc;
+  --color-text-muted: #94a3b8;
+}
+
+/* Density variants */
+.density-compact {
+  --density-gap: 0.5rem;
+  --density-padding: 0.5rem;
+}
+
+.density-comfortable {
+  --density-gap: 1.5rem;
+  --density-padding: 1.5rem;
+}

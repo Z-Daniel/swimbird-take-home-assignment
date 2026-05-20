@@ -41,6 +41,7 @@ You are an expert in TypeScript, Angular, and scalable web application developme
 - Use `computed()` for derived state
 - Keep state transformations pure and predictable
 - Do NOT use `mutate` on signals, use `update` or `set` instead
+- In `effect()`, always read every signal into a local variable at the top of the function before any conditional logic. Angular only tracks signals that are actually invoked during execution — short-circuit operators (`&&`, `||`, ternaries) can silently prevent a signal from being read and drop it from the dependency set
 
 ## Templates
 
