@@ -27,16 +27,15 @@
 - Interfaces for `Account`, `Holding`, `Transaction`, `Performance`
 - No UI — verify models compile and match API shapes
 
-### M5 — HTTP services and async state helper
+### M5 — HTTP services
 - Create `ApiService` in `src/app/core/api.service.ts` — injects `HttpClient` and `APP_CONFIG`, exposes typed `get<T>()` and `post<T>()` methods that prepend the base URL and return plain observables
-- Create `toLoadable()` helper in `src/app/core/to-loadable.ts`
 - `AccountService`: `getAccounts()`, `getAccount(id)` — injects `ApiService`
 - `TransactionService`: `getTransactions(id)`, `createTransaction(id, payload)` — injects `ApiService`
 - `HoldingsService`: `getHoldings(id)` — injects `ApiService`
 - `PerformanceService`: `getPerformance()` — injects `ApiService`
+- Each component manages its own async state with three signals: `loading`, `data`, and `error`; subscribes via `.subscribe()` and cancels on reload by unsubscribing the previous `Subscription`; cleans up on destroy via `DestroyRef.onDestroy()`
 - Verify each call returns data in the browser network tab
 - Write unit tests for `ApiService` (base URL prepending, correct HTTP method delegation)
-- Write unit tests for `toLoadable()` (loading state, success state, error state)
 - Write unit tests for each domain service (correct endpoint paths, request params, error propagation)
 
 ### M6 — Dashboard: accounts list
@@ -144,9 +143,7 @@ src/app/
 ```
 
 - **`ApiService` as HTTP base layer** — a single `core/api.service.ts` injects `HttpClient` and the `APP_CONFIG` token and exposes typed `get<T>()` and `post<T>()` methods that prepend the base URL. Domain services inject `ApiService` rather than `HttpClient` directly, keeping the base URL and HTTP concerns out of domain code and making domain services easier to test.
-- **`HttpClient` + `toSignal()` for data fetching** — services wrap `HttpClient` calls and expose observables; components consume them via a `toLoadable()` helper that produces a single `{ status: 'loading' | 'success' | 'error', data?, error? }` signal using `startWith`/`catchError`/`toSignal()`. Both `HttpClient` and `toSignal()` are stable. `httpResource` was considered but skipped — developer preview in v21, API may change between minor versions.
-- **`toLoadable()` helper for eager reads** — a small utility in `src/app/core/to-loadable.ts` that wraps a GET observable into a `{ status: 'loading' | 'success' | 'error', data?, error? }` signal using `startWith`/`catchError`/`toSignal()`. Called at field initialization time (valid injection context). Scoped to read operations that trigger on component creation.
-- **Manual signals for event-driven writes** — POST/PUT/DELETE operations triggered by user events (e.g. form submission) use explicit `submitting = signal(false)` and `error = signal<string | null>(null)` signals managed in the event handler via `.subscribe()` + `takeUntilDestroyed()`. Attempting to use `toLoadable()` here is invalid — `toSignal()` cannot be called outside an injection context.
+- **Manual signals for all async state** — each component owns three signals: `loading = signal(true)`, `data = signal<T | null>(null)`, and `error = signal<string | null>(null)`. Data fetching is triggered in `ngOnInit()` (constructor is reserved for DI only), calls `.subscribe()` directly; on reload the previous `Subscription` is cancelled before starting a new one; `DestroyRef.onDestroy()` registered in `ngOnInit()` handles final cleanup. This keeps state explicit and local, works identically for reads and writes, and avoids injection-context constraints that come with `toSignal()`-based helpers. `httpResource` was considered but skipped — developer preview in v21.
 - **Reactive forms (`FormGroup` / `FormControl`)** — used for all form state. Stable, well-documented, and sufficient for the single create-transaction form in scope. Signal Forms (`@angular/forms/signals`) were considered but skipped — also experimental in v21.
 - **Route-based lazy loading** — each route loads its component via `loadComponent`. No preload strategy — the app has three routes and startup cost is negligible, so `PreloadAllModules` would add complexity with no measurable benefit.
 - **`withComponentInputBinding()`** — added to `provideRouter()` in `app.config.ts` so route parameters and query params are bound directly to component inputs, avoiding manual `ActivatedRoute` injection.
