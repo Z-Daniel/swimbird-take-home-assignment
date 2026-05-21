@@ -1,5 +1,6 @@
 import { DecimalPipe, SlicePipe } from '@angular/common';
 import { ChangeDetectionStrategy, Component, input } from '@angular/core';
+import { StatTileComponent } from '../../shared/ui/stat-tile.component';
 import { Account } from '../account.model';
 import { AccountStatusPipe } from './account-status.pipe';
 import { TrendColorPipe } from '../../shared/ui/trend-color.pipe';
@@ -7,7 +8,7 @@ import { TrendColorPipe } from '../../shared/ui/trend-color.pipe';
 @Component({
   selector: 'app-account-header',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [DecimalPipe, SlicePipe, AccountStatusPipe, TrendColorPipe],
+  imports: [DecimalPipe, SlicePipe, StatTileComponent, AccountStatusPipe, TrendColorPipe],
   template: `
     @let a = account();
     <div class="space-y-4">
@@ -24,24 +25,17 @@ import { TrendColorPipe } from '../../shared/ui/trend-color.pipe';
         </p>
       </div>
 
-      <div class="flex flex-wrap gap-6">
-        <div>
-          <p class="text-xs font-medium uppercase tracking-wide text-(--color-text-muted)">Balance</p>
-          <p class="text-2xl font-bold text-(--color-text)">
-            {{ a.balance | number:'1.0-0' }} {{ a.currency }}
-          </p>
-        </div>
-        <div>
-          <p class="text-xs font-medium uppercase tracking-wide text-(--color-text-muted)">Change today</p>
-          <p class="text-2xl font-bold" [class]="a.changeToday | trendColor">
-            {{ a.changeToday >= 0 ? '+' : '' }}{{ a.changeToday | number:'1.2-2' }}%
-          </p>
-        </div>
-        <div>
-          <p class="text-xs font-medium uppercase tracking-wide text-(--color-text-muted)">Risk level</p>
-          <p class="text-2xl font-bold text-(--color-text)">{{ a.riskLevel }}</p>
-        </div>
-      </div>
+      <dl class="flex flex-wrap gap-6">
+        <app-stat-tile label="Balance" valueClass="text-2xl font-bold text-(--color-text)">
+          {{ a.balance | number:'1.0-0' }} {{ a.currency }}
+        </app-stat-tile>
+        <app-stat-tile label="Change today" [valueClass]="'text-2xl font-bold ' + (a.changeToday | trendColor)">
+          {{ a.changeToday >= 0 ? '+' : '' }}{{ a.changeToday | number:'1.2-2' }}%
+        </app-stat-tile>
+        <app-stat-tile label="Risk level" valueClass="text-2xl font-bold text-(--color-text)">
+          {{ a.riskLevel }}
+        </app-stat-tile>
+      </dl>
     </div>
   `,
 })

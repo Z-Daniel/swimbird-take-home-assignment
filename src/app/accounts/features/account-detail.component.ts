@@ -3,17 +3,28 @@ import { RouterLink } from '@angular/router';
 import { map } from 'rxjs';
 import { SectionState } from '../../core/section-state';
 import { SectionShellComponent } from '../../shared/ui/section-shell.component';
+import { PerformanceService } from '../../dashboard/performance.service';
+import { PerformanceChartComponent } from '../../dashboard/ui/performance-chart.component';
 import { AccountService } from '../account.service';
 import { HoldingService } from '../holding.service';
 import { TransactionService } from '../transaction.service';
 import { AccountHeaderComponent } from '../ui/account-header.component';
 import { AccountHoldingsListComponent } from '../ui/account-holdings-list.component';
+import { AccountStatsComponent } from '../ui/account-stats.component';
 import { TransactionsListComponent } from '../ui/transactions-list.component';
 
 @Component({
   selector: 'app-account-detail',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [RouterLink, SectionShellComponent, AccountHeaderComponent, AccountHoldingsListComponent, TransactionsListComponent],
+  imports: [
+    RouterLink,
+    SectionShellComponent,
+    AccountHeaderComponent,
+    AccountStatsComponent,
+    PerformanceChartComponent,
+    AccountHoldingsListComponent,
+    TransactionsListComponent,
+  ],
   template: `
     <div class="flex flex-col gap-6">
       <a
@@ -32,8 +43,23 @@ import { TransactionsListComponent } from '../ui/transactions-list.component';
         <app-account-header [account]="accountState.items()[0]" />
       </app-section-shell>
 
+      @let holdings = holdingsState.items();
+      @if (holdings.length > 0) {
+        <app-account-stats [holdings]="holdings" />
+      }
+
+      <app-section-shell
+        title="Performance"
+        [loading]="performanceState.loading()"
+        [error]="performanceState.error()"
+        [empty]="performanceState.items().length === 0"
+        emptyMessage="No performance data found."
+        (retry)="performanceState.load()"
+      >
+        <app-performance-chart [data]="performanceState.items()" />
+      </app-section-shell>
+
       <div class="grid grid-cols-1 gap-6 lg:grid-cols-2">
-        @let holdings = holdingsState.items();
         <app-section-shell
           title="Holdings"
           [loading]="holdingsState.loading()"
@@ -64,6 +90,7 @@ export class AccountDetailComponent {
   private readonly accountService = inject(AccountService);
   private readonly holdingService = inject(HoldingService);
   private readonly transactionService = inject(TransactionService);
+  private readonly performanceService = inject(PerformanceService);
 
   readonly id = input.required<string>();
 
@@ -85,12 +112,19 @@ export class AccountDetailComponent {
     inject(DestroyRef),
   );
 
+  protected readonly performanceState = new SectionState(
+    () => this.performanceService.getAccountPerformance(this.id()),
+    'Failed to load performance data.',
+    inject(DestroyRef),
+  );
+
   constructor() {
     effect(() => {
-      this.id(); // re-run load when id changes
+      this.id(); // re-run all loads when id changes
       this.accountState.load();
       this.holdingsState.load();
       this.transactionsState.load();
+      this.performanceState.load();
     });
   }
 }
