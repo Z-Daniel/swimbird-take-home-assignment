@@ -1,20 +1,26 @@
-import { ChangeDetectionStrategy, Component, ElementRef, input, output, viewChild } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  DestroyRef,
+  ElementRef,
+  inject,
+  input,
+  output,
+  signal,
+  viewChild,
+} from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { Subscription } from 'rxjs';
 import { Account } from '../account.model';
-import { TransactionType } from '../transaction.model';
-
-export interface TransactionFormValue {
-  date: string;
-  type: TransactionType;
-  amount: number;
-  description: string;
-}
+import { TransactionService } from '../transaction.service';
+import { Transaction, TransactionType, ValidationError } from '../transaction.model';
 
 @Component({
   selector: 'app-create-transaction-modal',
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [ReactiveFormsModule],
   template: `
+    @let isSubmitting = submitting();
     <dialog
       #dialogEl
       class="m-auto w-full max-w-lg rounded-xl bg-(--color-surface) p-0 shadow-xl overflow-hidden backdrop:bg-black/50"
@@ -33,7 +39,8 @@ export interface TransactionFormValue {
           <button
             type="button"
             (click)="close()"
-            class="rounded-md p-1 text-(--color-text-muted) transition-colors hover:text-(--color-text)"
+            [disabled]="isSubmitting"
+            class="rounded-md p-1 text-(--color-text-muted) transition-colors hover:text-(--color-text) disabled:opacity-50"
             aria-label="Close"
           >
             ✕
@@ -41,6 +48,13 @@ export interface TransactionFormValue {
         </div>
 
         <div class="flex-1 space-y-5 overflow-y-auto px-6 py-5">
+          @let errors = fieldErrors();
+
+          @if (serverError()) {
+            <div role="alert" class="rounded-lg border border-red-300 bg-red-50 px-4 py-3 text-sm text-red-700 dark:border-red-800 dark:bg-red-950 dark:text-red-400">
+              {{ serverError() }}
+            </div>
+          }
 
           <div>
             <label for="tx-date" class="mb-1 block text-sm font-medium text-(--color-text)">Date</label>
@@ -49,12 +63,12 @@ export interface TransactionFormValue {
               type="date"
               formControlName="date"
               class="w-full rounded-lg border bg-(--color-surface) px-3 py-2 text-sm text-(--color-text) focus:outline-none focus:ring-2 focus:ring-blue-500"
-              [class]="controls.date.invalid && controls.date.touched
-                ? 'border-red-500'
-                : 'border-(--color-border)'"
+              [class]="(controls.date.invalid && controls.date.touched) || errors.date ? 'border-red-500' : 'border-(--color-border)'"
             />
-            @if (controls.date.invalid && controls.date.touched) {
-              <p class="mt-1 text-xs text-red-600 dark:text-red-400">Date is required.</p>
+            @if ((controls.date.invalid && controls.date.touched) || errors.date) {
+              <p class="mt-1 text-xs text-red-600 dark:text-red-400">
+                {{ errors.date ?? 'Date is required.' }}
+              </p>
             }
           </div>
 
@@ -64,9 +78,7 @@ export interface TransactionFormValue {
               id="tx-type"
               formControlName="type"
               class="w-full rounded-lg border bg-(--color-surface) px-3 py-2 text-sm text-(--color-text) focus:outline-none focus:ring-2 focus:ring-blue-500"
-              [class]="controls.type.invalid && controls.type.touched
-                ? 'border-red-500'
-                : 'border-(--color-border)'"
+              [class]="(controls.type.invalid && controls.type.touched) || errors.type ? 'border-red-500' : 'border-(--color-border)'"
             >
               <option value="trade">Trade</option>
               <option value="dividend">Dividend</option>
@@ -74,8 +86,10 @@ export interface TransactionFormValue {
               <option value="interest">Interest</option>
               <option value="cash">Cash</option>
             </select>
-            @if (controls.type.invalid && controls.type.touched) {
-              <p class="mt-1 text-xs text-red-600 dark:text-red-400">Type is required.</p>
+            @if ((controls.type.invalid && controls.type.touched) || errors.type) {
+              <p class="mt-1 text-xs text-red-600 dark:text-red-400">
+                {{ errors.type ?? 'Type is required.' }}
+              </p>
             }
           </div>
 
@@ -91,13 +105,13 @@ export interface TransactionFormValue {
               step="0.01"
               placeholder="e.g. -2400.00"
               class="w-full rounded-lg border bg-(--color-surface) px-3 py-2 text-sm text-(--color-text) focus:outline-none focus:ring-2 focus:ring-blue-500"
-              [class]="controls.amount.invalid && controls.amount.touched
-                ? 'border-red-500'
-                : 'border-(--color-border)'"
+              [class]="(controls.amount.invalid && controls.amount.touched) || errors.amount ? 'border-red-500' : 'border-(--color-border)'"
             />
             <p class="mt-1 text-xs text-(--color-text-muted)">Negative for outflows</p>
-            @if (controls.amount.invalid && controls.amount.touched) {
-              <p class="mt-1 text-xs text-red-600 dark:text-red-400">Amount is required.</p>
+            @if ((controls.amount.invalid && controls.amount.touched) || errors.amount) {
+              <p class="mt-1 text-xs text-red-600 dark:text-red-400">
+                {{ errors.amount ?? 'Amount is required.' }}
+              </p>
             }
           </div>
 
@@ -109,12 +123,12 @@ export interface TransactionFormValue {
               formControlName="description"
               placeholder="e.g. AAPL sell — 20 shares"
               class="w-full rounded-lg border bg-(--color-surface) px-3 py-2 text-sm text-(--color-text) focus:outline-none focus:ring-2 focus:ring-blue-500"
-              [class]="controls.description.invalid && controls.description.touched
-                ? 'border-red-500'
-                : 'border-(--color-border)'"
+              [class]="(controls.description.invalid && controls.description.touched) || errors.description ? 'border-red-500' : 'border-(--color-border)'"
             />
-            @if (controls.description.invalid && controls.description.touched) {
-              <p class="mt-1 text-xs text-red-600 dark:text-red-400">Description is required.</p>
+            @if ((controls.description.invalid && controls.description.touched) || errors.description) {
+              <p class="mt-1 text-xs text-red-600 dark:text-red-400">
+                {{ errors.description ?? 'Description is required.' }}
+              </p>
             }
           </div>
 
@@ -124,15 +138,19 @@ export interface TransactionFormValue {
           <button
             type="button"
             (click)="close()"
-            class="rounded-lg px-4 py-2 text-sm font-medium text-(--color-text-muted) transition-colors hover:text-(--color-text)"
+            [disabled]="isSubmitting"
+            class="rounded-lg px-4 py-2 text-sm font-medium text-(--color-text-muted) transition-colors hover:text-(--color-text) disabled:opacity-50"
           >
             Cancel
           </button>
           <button
             type="submit"
-            [disabled]="form.invalid"
-            class="rounded-lg bg-blue-600 px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-blue-700 disabled:cursor-not-allowed disabled:opacity-50"
+            [disabled]="form.invalid || isSubmitting"
+            class="flex items-center gap-2 rounded-lg bg-blue-600 px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-blue-700 disabled:cursor-not-allowed disabled:opacity-50"
           >
+            @if (isSubmitting) {
+              <span class="h-4 w-4 animate-spin rounded-full border-2 border-white border-t-transparent" aria-hidden="true"></span>
+            }
             Add transaction
           </button>
         </div>
@@ -143,9 +161,11 @@ export interface TransactionFormValue {
 })
 export class CreateTransactionModalComponent {
   readonly account = input<Account | undefined>(undefined);
-  readonly submitted = output<TransactionFormValue>();
+  readonly transactionCreated = output<Transaction>();
 
+  private readonly transactionService = inject(TransactionService);
   private readonly dialogEl = viewChild.required<ElementRef<HTMLDialogElement>>('dialogEl');
+  private sub: Subscription | null = null;
 
   protected readonly form = new FormGroup({
     date: new FormControl('', { validators: Validators.required, nonNullable: true }),
@@ -154,12 +174,22 @@ export class CreateTransactionModalComponent {
     description: new FormControl('', { validators: Validators.required, nonNullable: true }),
   });
 
+  protected readonly submitting = signal(false);
+  protected readonly serverError = signal<string | null>(null);
+  protected readonly fieldErrors = signal<Partial<Record<keyof Transaction, string>>>({});
+
   protected get controls() {
     return this.form.controls;
   }
 
+  constructor() {
+    inject(DestroyRef).onDestroy(() => this.sub?.unsubscribe());
+  }
+
   open(): void {
     this.form.reset({ type: 'trade' });
+    this.serverError.set(null);
+    this.fieldErrors.set({});
     this.dialogEl().nativeElement.showModal();
   }
 
@@ -174,6 +204,9 @@ export class CreateTransactionModalComponent {
   }
 
   protected onDialogClose(): void {
+    this.sub?.unsubscribe();
+    this.submitting.set(false);
+    this.form.enable();
     this.form.reset({ type: 'trade' });
   }
 
@@ -182,7 +215,34 @@ export class CreateTransactionModalComponent {
       this.form.markAllAsTouched();
       return;
     }
+    const account = this.account();
+    if (!account) return;
+
+    this.submitting.set(true);
+    this.serverError.set(null);
+    this.fieldErrors.set({});
+    this.form.disable();
+
     const { date, type, amount, description } = this.form.getRawValue();
-    this.submitted.emit({ date, type, amount: amount!, description });
+
+    this.sub = this.transactionService
+      .createTransaction(account.id, { date, type, amount: amount!, description })
+      .subscribe({
+        next: (transaction) => {
+          this.submitting.set(false);
+          this.transactionCreated.emit(transaction);
+          this.close();
+        },
+        error: (err) => {
+          this.submitting.set(false);
+          this.form.enable();
+          const body: ValidationError = err?.error;
+          if (body?.fields) {
+            this.fieldErrors.set(body.fields);
+            this.form.markAllAsTouched();
+          }
+          this.serverError.set(body?.error ?? 'Something went wrong. Please try again.');
+        },
+      });
   }
 }

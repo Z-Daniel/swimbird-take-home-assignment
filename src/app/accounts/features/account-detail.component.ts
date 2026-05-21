@@ -8,6 +8,7 @@ import { PerformanceChartComponent } from '../../dashboard/ui/performance-chart.
 import { AccountService } from '../account.service';
 import { HoldingService } from '../holding.service';
 import { TransactionService } from '../transaction.service';
+import { Transaction } from '../transaction.model';
 import { AccountHeaderComponent } from '../ui/account-header.component';
 import { AccountHoldingsListComponent } from '../ui/account-holdings-list.component';
 import { AccountStatsComponent } from '../ui/account-stats.component';
@@ -101,7 +102,10 @@ import { CreateTransactionModalComponent } from './create-transaction-modal.comp
       </div>
     </div>
 
-    <app-create-transaction-modal [account]="account" />
+    <app-create-transaction-modal
+      [account]="account"
+      (transactionCreated)="onTransactionCreated($event)"
+    />
   `,
 })
 export class AccountDetailComponent {
@@ -137,6 +141,10 @@ export class AccountDetailComponent {
     'Failed to load performance data.',
     inject(DestroyRef),
   );
+
+  protected onTransactionCreated(transaction: Transaction): void {
+    this.transactionsState.items.update((current) => [transaction, ...current]);
+  }
 
   constructor() {
     effect(() => {
