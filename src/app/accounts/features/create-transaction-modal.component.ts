@@ -25,11 +25,11 @@ import { ToastService } from '../../core/toast.service';
     <dialog
       #dialogEl
       aria-labelledby="tx-modal-title"
-      class="m-auto w-full max-w-lg rounded-xl bg-(--color-surface) p-0 shadow-xl overflow-hidden backdrop:bg-black/50"
+      class="inset-0 m-0 h-dvh max-h-none w-screen max-w-none bg-(--color-surface) p-0 shadow-xl overflow-hidden backdrop:bg-black/50 sm:inset-auto sm:m-auto sm:h-auto sm:max-h-[90vh] sm:w-full sm:max-w-lg sm:rounded-xl"
       (click)="onBackdropClick($event)"
       (close)="onDialogClose()"
     >
-      <form [formGroup]="form" (ngSubmit)="onSubmit()" novalidate class="flex flex-col max-h-[90vh]">
+      <form [formGroup]="form" (ngSubmit)="onSubmit()" novalidate class="flex flex-col h-full sm:h-auto sm:max-h-[90vh]">
 
         <div class="flex items-start justify-between border-b border-(--color-border) px-6 py-4">
           <div>
@@ -136,19 +136,19 @@ import { ToastService } from '../../core/toast.service';
 
         </div>
 
-        <div class="flex justify-end gap-3 border-t border-(--color-border) px-6 py-4">
+        <div class="flex flex-col-reverse gap-3 border-t border-(--color-border) px-6 py-4 sm:flex-row sm:justify-end">
           <button
             type="button"
             (click)="close()"
             [disabled]="isSubmitting"
-            class="cursor-pointer rounded-lg px-4 py-2 text-sm font-medium text-(--color-text-muted) transition-colors hover:text-(--color-text) disabled:cursor-not-allowed disabled:opacity-50"
+            class="w-full cursor-pointer rounded-lg px-4 py-2.5 text-sm font-medium text-(--color-text-muted) transition-colors hover:text-(--color-text) disabled:cursor-not-allowed disabled:opacity-50 sm:w-auto sm:py-2"
           >
             Cancel
           </button>
           <button
             type="submit"
             [disabled]="form.invalid || isSubmitting"
-            class="flex cursor-pointer items-center gap-2 rounded-lg bg-blue-600 px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-blue-700 disabled:cursor-not-allowed disabled:opacity-50"
+            class="flex w-full cursor-pointer items-center justify-center gap-2 rounded-lg bg-blue-600 px-4 py-2.5 text-sm font-medium text-white transition-colors hover:bg-blue-700 disabled:cursor-not-allowed disabled:opacity-50 sm:w-auto sm:py-2"
           >
             @if (isSubmitting) {
               <span class="h-4 w-4 animate-spin rounded-full border-2 border-white border-t-transparent" aria-hidden="true"></span>
