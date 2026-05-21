@@ -45,6 +45,7 @@ const NAV_ITEMS = [
               <li>
                 <a
                   [href]="'#' + item.id"
+                  (click)="scrollTo($event, item.id)"
                   class="block rounded-md px-3 py-2 text-sm font-medium text-(--color-text-muted) transition-colors hover:bg-(--color-border) hover:text-(--color-text)"
                 >
                   {{ item.label }}
@@ -144,4 +145,9 @@ export class SettingsComponent {
   protected readonly densityOptions = DENSITY_OPTIONS;
   protected readonly currencyOptions = CURRENCY_OPTIONS;
   protected readonly navItems = NAV_ITEMS;
+
+  protected scrollTo(event: Event, id: string): void {
+    event.preventDefault();
+    document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
+  }
 }
