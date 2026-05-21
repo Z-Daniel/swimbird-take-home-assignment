@@ -1,59 +1,36 @@
-# SwimbirdTakeHomeAssignment
+# Portfolio Dashboard
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 21.2.9.
+A responsive portfolio management dashboard built as a take-home assessment for Swimbird.
 
-## Development server
+## Features
 
-To start a local development server, run:
+- **Dashboard** — accounts list, top holdings, and portfolio performance chart
+- **Account detail** — account metadata, holdings breakdown, transaction history, and per-account performance chart
+- **Create transaction** — modal form with client-side validation, server error surfacing, and optimistic list update
+- **Settings** — theme (light / dark / system), density, and display currency, persisted to `localStorage`
+- Light and dark mode, responsive layout (mobile cards → desktop tables)
+
+## Running locally
+
+The app expects the mock API to be running at `http://localhost:5179`.
 
 ```bash
+npm install
 ng serve
 ```
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+Open `http://localhost:4200`.
 
-## Code scaffolding
-
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
-
-```bash
-ng generate component component-name
-```
-
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
-
-```bash
-ng generate --help
-```
-
-## Building
-
-To build the project run:
-
-```bash
-ng build
-```
-
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
-
-## Running unit tests
-
-To execute unit tests with the [Vitest](https://vitest.dev/) test runner, use the following command:
+## Tests
 
 ```bash
 ng test
 ```
 
-## Running end-to-end tests
+## Architecture
 
-For end-to-end (e2e) testing, run:
+The project uses Angular 21 with signals, `OnPush` change detection, and Tailwind CSS. Key decisions — component structure, state management, HTTP layer, chart library choice, and modal approach — are documented in [PLAN.md](./PLAN.md).
 
-```bash
-ng e2e
-```
+## AI usage
 
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
-
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+This project was built in collaboration with Claude (Anthropic). Architecture, component design, and key tradeoffs were directed by me; Claude assisted with implementation, caught edge cases, and helped write the test suite. All code was reviewed before being committed.
