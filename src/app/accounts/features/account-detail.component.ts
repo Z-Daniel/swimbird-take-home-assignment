@@ -53,6 +53,7 @@ import { CreateTransactionModalComponent } from './create-transaction-modal.comp
         @if (account) {
           <button
             (click)="createTransactionModal().open()"
+            aria-haspopup="dialog"
             class="shrink-0 cursor-pointer rounded-lg bg-blue-600 px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-blue-700"
           >
             + Add transaction

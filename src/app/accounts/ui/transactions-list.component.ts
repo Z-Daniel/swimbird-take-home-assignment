@@ -14,10 +14,10 @@ import { TrendColorPipe } from '../../shared/ui/trend-color.pipe';
       <table class="w-full text-sm">
         <thead>
           <tr class="border-b border-(--color-border) text-left text-xs font-medium uppercase tracking-wide text-(--color-text-muted)">
-            <th class="py-3 pr-4">Date</th>
-            <th class="py-3 pr-4">Type</th>
-            <th class="py-3 pr-4 text-right">Amount</th>
-            <th class="py-3">Description</th>
+            <th scope="col" class="py-3 pr-4">Date</th>
+            <th scope="col" class="py-3 pr-4">Type</th>
+            <th scope="col" class="py-3 pr-4 text-right">Amount</th>
+            <th scope="col" class="py-3">Description</th>
           </tr>
         </thead>
         <tbody>

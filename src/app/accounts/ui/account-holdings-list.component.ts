@@ -12,11 +12,11 @@ import { Holding } from '../holding.model';
       <table class="w-full text-sm">
         <thead>
           <tr class="border-b border-(--color-border) text-left text-xs font-medium uppercase tracking-wide text-(--color-text-muted)">
-            <th class="py-3 pr-4">Symbol</th>
-            <th class="py-3 pr-4">Name</th>
-            <th class="py-3 pr-4 text-right">Qty</th>
-            <th class="py-3 pr-4 text-right">Value</th>
-            <th class="py-3 text-right">Weight</th>
+            <th scope="col" class="py-3 pr-4">Symbol</th>
+            <th scope="col" class="py-3 pr-4">Name</th>
+            <th scope="col" class="py-3 pr-4 text-right">Qty</th>
+            <th scope="col" class="py-3 pr-4 text-right">Value</th>
+            <th scope="col" class="py-3 text-right">Weight</th>
           </tr>
         </thead>
         <tbody>

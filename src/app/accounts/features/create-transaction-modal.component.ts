@@ -23,6 +23,7 @@ import { Transaction, TransactionType, ValidationError } from '../transaction.mo
     @let isSubmitting = submitting();
     <dialog
       #dialogEl
+      aria-labelledby="tx-modal-title"
       class="m-auto w-full max-w-lg rounded-xl bg-(--color-surface) p-0 shadow-xl overflow-hidden backdrop:bg-black/50"
       (click)="onBackdropClick($event)"
       (close)="onDialogClose()"
@@ -31,7 +32,7 @@ import { Transaction, TransactionType, ValidationError } from '../transaction.mo
 
         <div class="flex items-start justify-between border-b border-(--color-border) px-6 py-4">
           <div>
-            <h2 class="text-lg font-semibold text-(--color-text)">Add transaction</h2>
+            <h2 id="tx-modal-title" class="text-lg font-semibold text-(--color-text)">Add transaction</h2>
             @if (account(); as a) {
               <p class="text-sm text-(--color-text-muted)">{{ a.name }} · {{ a.currency }}</p>
             }
