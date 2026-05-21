@@ -40,7 +40,7 @@ import { Transaction, TransactionType, ValidationError } from '../transaction.mo
             type="button"
             (click)="close()"
             [disabled]="isSubmitting"
-            class="rounded-md p-1 text-(--color-text-muted) transition-colors hover:text-(--color-text) disabled:opacity-50"
+            class="cursor-pointer rounded-md p-1 text-(--color-text-muted) transition-colors hover:text-(--color-text) disabled:cursor-not-allowed disabled:opacity-50"
             aria-label="Close"
           >
             ✕
@@ -139,14 +139,14 @@ import { Transaction, TransactionType, ValidationError } from '../transaction.mo
             type="button"
             (click)="close()"
             [disabled]="isSubmitting"
-            class="rounded-lg px-4 py-2 text-sm font-medium text-(--color-text-muted) transition-colors hover:text-(--color-text) disabled:opacity-50"
+            class="cursor-pointer rounded-lg px-4 py-2 text-sm font-medium text-(--color-text-muted) transition-colors hover:text-(--color-text) disabled:cursor-not-allowed disabled:opacity-50"
           >
             Cancel
           </button>
           <button
             type="submit"
             [disabled]="form.invalid || isSubmitting"
-            class="flex items-center gap-2 rounded-lg bg-blue-600 px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-blue-700 disabled:cursor-not-allowed disabled:opacity-50"
+            class="flex cursor-pointer items-center gap-2 rounded-lg bg-blue-600 px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-blue-700 disabled:cursor-not-allowed disabled:opacity-50"
           >
             @if (isSubmitting) {
               <span class="h-4 w-4 animate-spin rounded-full border-2 border-white border-t-transparent" aria-hidden="true"></span>

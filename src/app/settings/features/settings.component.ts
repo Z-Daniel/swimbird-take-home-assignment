@@ -48,7 +48,7 @@ const CURRENCY_OPTIONS: Option<Currency>[] = [
                   type="button"
                   (click)="settings.theme.set(opt.value)"
                   [attr.aria-pressed]="settings.theme() === opt.value"
-                  class="px-4 py-1.5 text-sm font-medium transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500"
+                  class="cursor-pointer px-4 py-1.5 text-sm font-medium transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500"
                   [class]="settings.theme() === opt.value
                     ? 'bg-blue-600 text-white'
                     : 'text-(--color-text-muted) hover:text-(--color-text) hover:bg-(--color-border)'"
@@ -67,7 +67,7 @@ const CURRENCY_OPTIONS: Option<Currency>[] = [
                   type="button"
                   (click)="settings.density.set(opt.value)"
                   [attr.aria-pressed]="settings.density() === opt.value"
-                  class="px-4 py-1.5 text-sm font-medium transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500"
+                  class="cursor-pointer px-4 py-1.5 text-sm font-medium transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500"
                   [class]="settings.density() === opt.value
                     ? 'bg-blue-600 text-white'
                     : 'text-(--color-text-muted) hover:text-(--color-text) hover:bg-(--color-border)'"

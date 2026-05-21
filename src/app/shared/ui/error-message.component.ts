@@ -10,7 +10,7 @@ import { ChangeDetectionStrategy, Component, input, output } from '@angular/core
         <button
           type="button"
           (click)="retry.emit()"
-          class="mt-2 text-sm font-medium text-red-700 underline hover:no-underline dark:text-red-300"
+          class="mt-2 cursor-pointer text-sm font-medium text-red-700 underline hover:no-underline dark:text-red-300"
         >
           Try again
         </button>
