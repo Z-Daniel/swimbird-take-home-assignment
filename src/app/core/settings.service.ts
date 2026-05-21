@@ -5,14 +5,46 @@ export type Theme = 'light' | 'dark' | 'system';
 export type Density = 'compact' | 'default' | 'comfortable';
 export type Currency = 'SEK' | 'USD' | 'EUR';
 
+const STORAGE_KEY = 'app-settings';
+
+interface StoredSettings {
+  theme?: Theme;
+  density?: Density;
+  currency?: Currency;
+}
+
+const THEMES: Theme[] = ['light', 'dark', 'system'];
+const DENSITIES: Density[] = ['compact', 'default', 'comfortable'];
+const CURRENCIES: Currency[] = ['SEK', 'USD', 'EUR'];
+
+function load(): StoredSettings {
+  try {
+    return JSON.parse(localStorage.getItem(STORAGE_KEY) ?? '{}');
+  } catch {
+    return {};
+  }
+}
+
 @Injectable({ providedIn: 'root' })
 export class SettingsService {
   private readonly doc = inject(DOCUMENT);
   private readonly systemDark = signal(false);
 
-  readonly theme = signal<Theme>('system');
-  readonly density = signal<Density>('default');
-  readonly currency = signal<Currency>('SEK');
+  private readonly stored = load();
+
+  readonly theme = signal<Theme>(
+    THEMES.includes(this.stored.theme as Theme) ? (this.stored.theme as Theme) : 'system',
+  );
+  readonly density = signal<Density>(
+    DENSITIES.includes(this.stored.density as Density)
+      ? (this.stored.density as Density)
+      : 'default',
+  );
+  readonly currency = signal<Currency>(
+    CURRENCIES.includes(this.stored.currency as Currency)
+      ? (this.stored.currency as Currency)
+      : 'SEK',
+  );
 
   readonly isDark = computed(() => {
     const theme = this.theme();
@@ -23,6 +55,7 @@ export class SettingsService {
   constructor() {
     this.initSystemDark();
     this.initDomEffect();
+    this.initPersistEffect();
   }
 
   private initSystemDark(): void {
@@ -45,6 +78,20 @@ export class SettingsService {
       html.classList.toggle('dark', isDark);
       html.classList.remove('density-compact', 'density-default', 'density-comfortable');
       html.classList.add(`density-${density}`);
+    });
+  }
+
+  private initPersistEffect(): void {
+    effect(() => {
+      const theme = this.theme();
+      const density = this.density();
+      const currency = this.currency();
+
+      try {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify({ theme, density, currency }));
+      } catch {
+        // storage unavailable (private browsing quota, etc.) — silently skip
+      }
     });
   }
 }
