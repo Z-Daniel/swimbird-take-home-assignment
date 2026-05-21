@@ -47,7 +47,9 @@ import { CreateTransactionModalComponent } from './create-transaction-modal.comp
             [empty]="false"
             (retry)="accountState.load()"
           >
-            <app-account-header [account]="account" />
+            @if (account) {
+              <app-account-header [account]="account" />
+            }
           </app-section-shell>
         </div>
         @if (account) {
