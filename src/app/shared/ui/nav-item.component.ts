@@ -9,9 +9,10 @@ import { RouterLink, RouterLinkActive } from '@angular/router';
     <li>
       <a
         [routerLink]="link()"
-        routerLinkActive="text-(--color-text)"
+        routerLinkActive
+        #rla="routerLinkActive"
         [ariaCurrentWhenActive]="'page'"
-        [class]="linkClass()"
+        [class]="rla.isActive ? activeClass() : linkClass()"
       >
         <ng-content />
       </a>
@@ -22,5 +23,8 @@ export class NavItemComponent {
   readonly link = input.required<string>();
   readonly linkClass = input<string>(
     'text-sm font-medium text-(--color-text-muted) transition-colors hover:text-(--color-text)',
+  );
+  readonly activeClass = input<string>(
+    'text-sm font-medium text-blue-600 transition-colors',
   );
 }
