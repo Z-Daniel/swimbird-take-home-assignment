@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, DestroyRef, effect, inject, input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, DestroyRef, effect, inject, input, viewChild } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { map } from 'rxjs';
 import { SectionState } from '../../core/section-state';
@@ -12,6 +12,7 @@ import { AccountHeaderComponent } from '../ui/account-header.component';
 import { AccountHoldingsListComponent } from '../ui/account-holdings-list.component';
 import { AccountStatsComponent } from '../ui/account-stats.component';
 import { TransactionsListComponent } from '../ui/transactions-list.component';
+import { CreateTransactionModalComponent } from './create-transaction-modal.component';
 
 @Component({
   selector: 'app-account-detail',
@@ -24,8 +25,11 @@ import { TransactionsListComponent } from '../ui/transactions-list.component';
     PerformanceChartComponent,
     AccountHoldingsListComponent,
     TransactionsListComponent,
+    CreateTransactionModalComponent,
   ],
   template: `
+    @let account = accountState.items()[0];
+
     <div class="flex flex-col gap-6">
       <a
         routerLink="/dashboard"
@@ -34,14 +38,26 @@ import { TransactionsListComponent } from '../ui/transactions-list.component';
         ← Back to dashboard
       </a>
 
-      <app-section-shell
-        [loading]="accountState.loading()"
-        [error]="accountState.error()"
-        [empty]="false"
-        (retry)="accountState.load()"
-      >
-        <app-account-header [account]="accountState.items()[0]" />
-      </app-section-shell>
+      <div class="flex items-start justify-between gap-4">
+        <div class="flex-1">
+          <app-section-shell
+            [loading]="accountState.loading()"
+            [error]="accountState.error()"
+            [empty]="false"
+            (retry)="accountState.load()"
+          >
+            <app-account-header [account]="account" />
+          </app-section-shell>
+        </div>
+        @if (account) {
+          <button
+            (click)="createTransactionModal().open()"
+            class="shrink-0 rounded-lg bg-blue-600 px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-blue-700"
+          >
+            + Add transaction
+          </button>
+        }
+      </div>
 
       @let holdings = holdingsState.items();
       @if (holdings.length > 0) {
@@ -84,9 +100,13 @@ import { TransactionsListComponent } from '../ui/transactions-list.component';
         </app-section-shell>
       </div>
     </div>
+
+    <app-create-transaction-modal [account]="account" />
   `,
 })
 export class AccountDetailComponent {
+  protected readonly createTransactionModal = viewChild.required(CreateTransactionModalComponent);
+
   private readonly accountService = inject(AccountService);
   private readonly holdingService = inject(HoldingService);
   private readonly transactionService = inject(TransactionService);
