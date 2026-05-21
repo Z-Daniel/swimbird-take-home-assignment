@@ -12,15 +12,18 @@ const MOBILE_LINK_CLASS =
   template: `
     <header class="sticky top-0 z-10 border-b border-(--color-border) bg-(--color-surface)">
       <div class="mx-auto flex max-w-7xl items-center justify-between px-(--density-padding) py-3">
-        <a routerLink="/dashboard" class="text-lg font-semibold text-(--color-text) no-underline">Portfolio</a>
+        <!-- Logo + desktop nav grouped on the left -->
+        <div class="flex items-center gap-6">
+          <a routerLink="/dashboard" class="text-lg font-semibold text-(--color-text) no-underline">Portfolio</a>
 
-        <!-- Desktop nav (sm+) -->
-        <nav aria-label="Main navigation" class="hidden sm:block">
-          <ul class="flex gap-6" role="list">
-            <app-nav-item link="/dashboard">Dashboard</app-nav-item>
-            <app-nav-item link="/settings">Settings</app-nav-item>
-          </ul>
-        </nav>
+          <!-- Desktop nav (sm+) -->
+          <nav aria-label="Main navigation" class="hidden sm:block">
+            <ul class="flex gap-1" role="list">
+              <app-nav-item link="/dashboard">Dashboard</app-nav-item>
+              <app-nav-item link="/settings">Settings</app-nav-item>
+            </ul>
+          </nav>
+        </div>
 
         <!-- Hamburger button (< sm) -->
         <button
