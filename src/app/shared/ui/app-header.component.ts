@@ -18,7 +18,7 @@ const MOBILE_LINK_CLASS =
 
           <!-- Desktop nav (sm+) -->
           <nav aria-label="Main navigation" class="hidden sm:block">
-            <ul class="flex gap-1" role="list">
+            <ul class="flex gap-4" role="list">
               <app-nav-item link="/dashboard">Dashboard</app-nav-item>
               <app-nav-item link="/settings">Settings</app-nav-item>
             </ul>
