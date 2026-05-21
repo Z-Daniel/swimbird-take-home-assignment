@@ -16,8 +16,8 @@ import { TrendColorPipe } from '../../shared/ui/trend-color.pipe';
         <thead>
           <tr class="border-b border-(--color-border) text-left text-xs font-medium uppercase tracking-wide text-(--color-text-muted)">
             <th scope="col" class="py-3 pr-4">Name</th>
-            <th scope="col" class="py-3 pr-4">Type</th>
-            <th scope="col" class="py-3 pr-4">Currency</th>
+            <th scope="col" class="hidden lg:table-cell py-3 pr-4">Type</th>
+            <th scope="col" class="hidden lg:table-cell py-3 pr-4">Currency</th>
             <th scope="col" class="py-3 pr-4 text-right">Balance</th>
             <th scope="col" class="py-3 pr-4 text-right">Change today</th>
             <th scope="col" class="py-3">Status</th>
@@ -32,8 +32,8 @@ import { TrendColorPipe } from '../../shared/ui/trend-color.pipe';
               class="cursor-pointer border-b border-(--color-border) transition-colors hover:bg-(--color-surface) focus:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-blue-500"
             >
               <td class="py-3 pr-4 font-medium text-(--color-text)">{{ account.name }}</td>
-              <td class="py-3 pr-4 text-(--color-text-muted)">{{ account.type }}</td>
-              <td class="py-3 pr-4 text-(--color-text-muted)">{{ account.currency }}</td>
+              <td class="hidden lg:table-cell py-3 pr-4 text-(--color-text-muted)">{{ account.type }}</td>
+              <td class="hidden lg:table-cell py-3 pr-4 text-(--color-text-muted)">{{ account.currency }}</td>
               <td class="py-3 pr-4 text-right font-medium text-(--color-text)">
                 {{ account.balance | number:'1.0-0' }} {{ account.currency }}
               </td>

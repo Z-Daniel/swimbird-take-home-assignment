@@ -17,7 +17,7 @@ import { TrendColorPipe } from '../../shared/ui/trend-color.pipe';
             <th scope="col" class="py-3 pr-4">Date</th>
             <th scope="col" class="py-3 pr-4">Type</th>
             <th scope="col" class="py-3 pr-4 text-right">Amount</th>
-            <th scope="col" class="py-3">Description</th>
+            <th scope="col" class="hidden lg:table-cell py-3">Description</th>
           </tr>
         </thead>
         <tbody>
@@ -32,7 +32,7 @@ import { TrendColorPipe } from '../../shared/ui/trend-color.pipe';
               <td class="py-3 pr-4 text-right font-medium" [class]="tx.amount | trendColor">
                 {{ tx.amount >= 0 ? '+' : '' }}{{ tx.amount | number:'1.2-2' }}
               </td>
-              <td class="py-3 text-(--color-text-muted)">{{ tx.description }}</td>
+              <td class="hidden lg:table-cell py-3 text-(--color-text-muted)">{{ tx.description }}</td>
             </tr>
           }
         </tbody>
