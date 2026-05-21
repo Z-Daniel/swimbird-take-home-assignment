@@ -24,91 +24,116 @@ const CURRENCY_OPTIONS: Option<Currency>[] = [
   { value: 'EUR', label: 'EUR' },
 ];
 
+const NAV_ITEMS = [
+  { id: 'appearance', label: 'Appearance' },
+  { id: 'preferences', label: 'Preferences' },
+];
+
 @Component({
   selector: 'app-settings',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
-    <div class="mx-auto max-w-2xl space-y-8">
-      <h1 class="text-2xl font-bold text-(--color-text)">Settings</h1>
+    <div class="mx-auto max-w-4xl">
+      <h1 class="mb-8 text-2xl font-bold text-(--color-text)">Settings</h1>
 
-      <div class="space-y-6 rounded-xl border border-(--color-border) bg-(--color-surface) p-6">
+      <div class="lg:grid lg:grid-cols-[180px_1fr] lg:gap-8 lg:items-start">
 
-        <div class="space-y-1">
-          <h2 class="text-base font-semibold text-(--color-text)">Appearance</h2>
-          <p class="text-sm text-(--color-text-muted)">Choose how the interface looks.</p>
-        </div>
-
-        <div class="space-y-5">
-
-          <div class="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
-            <label class="text-sm font-medium text-(--color-text)">Theme</label>
-            <div class="flex rounded-lg border border-(--color-border) overflow-hidden w-fit" role="group" aria-label="Theme">
-              @for (opt of themeOptions; track opt.value) {
-                <button
-                  type="button"
-                  (click)="settings.theme.set(opt.value)"
-                  [attr.aria-pressed]="settings.theme() === opt.value"
-                  class="cursor-pointer px-4 py-1.5 text-sm font-medium transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500"
-                  [class]="settings.theme() === opt.value
-                    ? 'bg-blue-600 text-white'
-                    : 'text-(--color-text-muted) hover:text-(--color-text) hover:bg-(--color-border)'"
+        <!-- Sidebar nav (desktop only) -->
+        <nav aria-label="Settings sections" class="hidden lg:block sticky top-24">
+          <ul class="flex flex-col gap-1" role="list">
+            @for (item of navItems; track item.id) {
+              <li>
+                <a
+                  [href]="'#' + item.id"
+                  class="block rounded-md px-3 py-2 text-sm font-medium text-(--color-text-muted) transition-colors hover:bg-(--color-border) hover:text-(--color-text)"
                 >
-                  {{ opt.label }}
-                </button>
-              }
-            </div>
-          </div>
-
-          <div class="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
-            <label class="text-sm font-medium text-(--color-text)">Density</label>
-            <div class="flex rounded-lg border border-(--color-border) overflow-hidden w-fit" role="group" aria-label="Density">
-              @for (opt of densityOptions; track opt.value) {
-                <button
-                  type="button"
-                  (click)="settings.density.set(opt.value)"
-                  [attr.aria-pressed]="settings.density() === opt.value"
-                  class="cursor-pointer px-4 py-1.5 text-sm font-medium transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500"
-                  [class]="settings.density() === opt.value
-                    ? 'bg-blue-600 text-white'
-                    : 'text-(--color-text-muted) hover:text-(--color-text) hover:bg-(--color-border)'"
-                >
-                  {{ opt.label }}
-                </button>
-              }
-            </div>
-          </div>
-
-        </div>
-      </div>
-
-      <div class="space-y-6 rounded-xl border border-(--color-border) bg-(--color-surface) p-6">
-
-        <div class="space-y-1">
-          <h2 class="text-base font-semibold text-(--color-text)">Currency</h2>
-          <p class="text-sm text-(--color-text-muted)">Select your preferred display currency.</p>
-        </div>
-
-        <div class="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
-          <label class="text-sm font-medium text-(--color-text)">Display currency</label>
-          <div class="flex rounded-lg border border-(--color-border) overflow-hidden w-fit" role="group" aria-label="Currency">
-            @for (opt of currencyOptions; track opt.value) {
-              <button
-                type="button"
-                (click)="settings.currency.set(opt.value)"
-                [attr.aria-pressed]="settings.currency() === opt.value"
-                class="px-4 py-1.5 text-sm font-medium transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500"
-                [class]="settings.currency() === opt.value
-                  ? 'bg-blue-600 text-white'
-                  : 'text-(--color-text-muted) hover:text-(--color-text) hover:bg-(--color-border)'"
-              >
-                {{ opt.label }}
-              </button>
+                  {{ item.label }}
+                </a>
+              </li>
             }
-          </div>
+          </ul>
+        </nav>
+
+        <!-- Settings sections -->
+        <div class="space-y-8">
+
+          <!-- Appearance -->
+          <section id="appearance" class="rounded-xl border border-(--color-border) bg-(--color-surface) p-6 space-y-6">
+            <div class="space-y-1">
+              <h2 class="text-base font-semibold text-(--color-text)">Appearance</h2>
+              <p class="text-sm text-(--color-text-muted)">Choose how the interface looks.</p>
+            </div>
+
+            <div class="space-y-5">
+              <div class="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
+                <label class="text-sm font-medium text-(--color-text)">Theme</label>
+                <div class="flex rounded-lg border border-(--color-border) overflow-hidden w-fit" role="group" aria-label="Theme">
+                  @for (opt of themeOptions; track opt.value) {
+                    <button
+                      type="button"
+                      (click)="settings.theme.set(opt.value)"
+                      [attr.aria-pressed]="settings.theme() === opt.value"
+                      class="cursor-pointer px-4 py-1.5 text-sm font-medium transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500"
+                      [class]="settings.theme() === opt.value
+                        ? 'bg-blue-600 text-white'
+                        : 'text-(--color-text-muted) hover:text-(--color-text) hover:bg-(--color-border)'"
+                    >
+                      {{ opt.label }}
+                    </button>
+                  }
+                </div>
+              </div>
+
+              <div class="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
+                <label class="text-sm font-medium text-(--color-text)">Density</label>
+                <div class="flex rounded-lg border border-(--color-border) overflow-hidden w-fit" role="group" aria-label="Density">
+                  @for (opt of densityOptions; track opt.value) {
+                    <button
+                      type="button"
+                      (click)="settings.density.set(opt.value)"
+                      [attr.aria-pressed]="settings.density() === opt.value"
+                      class="cursor-pointer px-4 py-1.5 text-sm font-medium transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500"
+                      [class]="settings.density() === opt.value
+                        ? 'bg-blue-600 text-white'
+                        : 'text-(--color-text-muted) hover:text-(--color-text) hover:bg-(--color-border)'"
+                    >
+                      {{ opt.label }}
+                    </button>
+                  }
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <!-- Preferences -->
+          <section id="preferences" class="rounded-xl border border-(--color-border) bg-(--color-surface) p-6 space-y-6">
+            <div class="space-y-1">
+              <h2 class="text-base font-semibold text-(--color-text)">Preferences</h2>
+              <p class="text-sm text-(--color-text-muted)">Customise display and data preferences.</p>
+            </div>
+
+            <div class="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
+              <label class="text-sm font-medium text-(--color-text)">Display currency</label>
+              <div class="flex rounded-lg border border-(--color-border) overflow-hidden w-fit" role="group" aria-label="Currency">
+                @for (opt of currencyOptions; track opt.value) {
+                  <button
+                    type="button"
+                    (click)="settings.currency.set(opt.value)"
+                    [attr.aria-pressed]="settings.currency() === opt.value"
+                    class="cursor-pointer px-4 py-1.5 text-sm font-medium transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500"
+                    [class]="settings.currency() === opt.value
+                      ? 'bg-blue-600 text-white'
+                      : 'text-(--color-text-muted) hover:text-(--color-text) hover:bg-(--color-border)'"
+                  >
+                    {{ opt.label }}
+                  </button>
+                }
+              </div>
+            </div>
+          </section>
+
         </div>
-
       </div>
-
     </div>
   `,
 })
@@ -118,4 +143,5 @@ export class SettingsComponent {
   protected readonly themeOptions = THEME_OPTIONS;
   protected readonly densityOptions = DENSITY_OPTIONS;
   protected readonly currencyOptions = CURRENCY_OPTIONS;
+  protected readonly navItems = NAV_ITEMS;
 }
