@@ -14,6 +14,7 @@ import { Subscription } from 'rxjs';
 import { Account } from '../account.model';
 import { TransactionService } from '../transaction.service';
 import { Transaction, TransactionType, ValidationError } from '../transaction.model';
+import { ToastService } from '../../core/toast.service';
 
 @Component({
   selector: 'app-create-transaction-modal',
@@ -165,6 +166,7 @@ export class CreateTransactionModalComponent {
   readonly transactionCreated = output<Transaction>();
 
   private readonly transactionService = inject(TransactionService);
+  private readonly toastService = inject(ToastService);
   private readonly dialogEl = viewChild.required<ElementRef<HTMLDialogElement>>('dialogEl');
   private sub: Subscription | null = null;
 
@@ -232,6 +234,7 @@ export class CreateTransactionModalComponent {
         next: (transaction) => {
           this.submitting.set(false);
           this.transactionCreated.emit(transaction);
+          this.toastService.show('Transaction added');
           this.close();
         },
         error: (err) => {
