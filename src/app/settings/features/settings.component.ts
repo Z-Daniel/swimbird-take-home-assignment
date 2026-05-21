@@ -24,38 +24,13 @@ const CURRENCY_OPTIONS: Option<Currency>[] = [
   { value: 'EUR', label: 'EUR' },
 ];
 
-const NAV_ITEMS = [
-  { id: 'appearance', label: 'Appearance' },
-  { id: 'preferences', label: 'Preferences' },
-];
-
 @Component({
   selector: 'app-settings',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
-    <div class="mx-auto max-w-4xl">
+    <div class="mx-auto max-w-2xl">
       <h1 class="mb-8 text-2xl font-bold text-(--color-text)">Settings</h1>
 
-      <div class="lg:grid lg:grid-cols-[180px_1fr] lg:gap-8 lg:items-start">
-
-        <!-- Sidebar nav (desktop only) -->
-        <nav aria-label="Settings sections" class="hidden lg:block sticky top-24">
-          <ul class="flex flex-col gap-1" role="list">
-            @for (item of navItems; track item.id) {
-              <li>
-                <a
-                  [href]="'#' + item.id"
-                  (click)="scrollTo($event, item.id)"
-                  class="block rounded-md px-3 py-2 text-sm font-medium text-(--color-text-muted) transition-colors hover:bg-(--color-border) hover:text-(--color-text)"
-                >
-                  {{ item.label }}
-                </a>
-              </li>
-            }
-          </ul>
-        </nav>
-
-        <!-- Settings sections -->
         <div class="space-y-8">
 
           <!-- Appearance -->
@@ -134,7 +109,6 @@ const NAV_ITEMS = [
           </section>
 
         </div>
-      </div>
     </div>
   `,
 })
@@ -144,10 +118,4 @@ export class SettingsComponent {
   protected readonly themeOptions = THEME_OPTIONS;
   protected readonly densityOptions = DENSITY_OPTIONS;
   protected readonly currencyOptions = CURRENCY_OPTIONS;
-  protected readonly navItems = NAV_ITEMS;
-
-  protected scrollTo(event: Event, id: string): void {
-    event.preventDefault();
-    document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
-  }
 }
