@@ -1,6 +1,6 @@
 import { DecimalPipe, SlicePipe } from '@angular/common';
 import { ChangeDetectionStrategy, Component, input } from '@angular/core';
-import { Transaction } from '../transaction.model';
+import { Transaction } from '../models/transaction.model';
 import { TransactionTypePipe } from './transaction-type.pipe';
 import { TrendColorPipe } from '../../shared/ui/trend-color.pipe';
 

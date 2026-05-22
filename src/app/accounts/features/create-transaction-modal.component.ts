@@ -11,10 +11,10 @@ import {
 } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Subscription } from 'rxjs';
-import { Account } from '../account.model';
-import { TransactionService } from '../transaction.service';
-import { Transaction, TransactionType, ValidationError } from '../transaction.model';
-import { ToastService } from '../../core/toast.service';
+import { Account } from '../models/account.model';
+import { TransactionService } from '../services/transaction.service';
+import { Transaction, TransactionType, ValidationError } from '../models/transaction.model';
+import { ToastService } from '../../core/services/toast.service';
 
 @Component({
   selector: 'app-create-transaction-modal',

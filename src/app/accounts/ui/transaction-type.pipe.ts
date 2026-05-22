@@ -1,5 +1,5 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { TransactionType } from '../transaction.model';
+import { TransactionType } from '../models/transaction.model';
 
 @Pipe({ name: 'transactionType' })
 export class TransactionTypePipe implements PipeTransform {

@@ -10,8 +10,8 @@ import {
   ApexYAxis,
   ChartComponent,
 } from 'ng-apexcharts';
-import { SettingsService } from '../../core/settings.service';
-import { PerformancePoint } from '../performance.model';
+import { SettingsService } from '../../core/services/settings.service';
+import { PerformancePoint } from '../models/performance.model';
 
 @Component({
   selector: 'app-performance-chart',

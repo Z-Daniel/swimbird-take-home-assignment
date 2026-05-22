@@ -1,8 +1,8 @@
 import { computed, DestroyRef, inject, Injectable } from '@angular/core';
-import { fromSEK, toSEK } from '../core/fx';
-import { SectionState } from '../core/section-state';
-import { SettingsService } from '../core/settings.service';
-import { AccountService } from '../accounts/account.service';
+import { fromSEK, toSEK } from '../../core/fx';
+import { SectionState } from '../../core/section-state';
+import { SettingsService } from '../../core/services/settings.service';
+import { AccountService } from '../../accounts/services/account.service';
 import { PerformanceService } from './performance.service';
 
 @Injectable()

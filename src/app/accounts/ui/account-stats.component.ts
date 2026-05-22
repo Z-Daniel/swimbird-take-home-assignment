@@ -1,7 +1,7 @@
 import { DecimalPipe } from '@angular/common';
 import { ChangeDetectionStrategy, Component, computed, input } from '@angular/core';
 import { StatTileComponent } from '../../shared/ui/stat-tile.component';
-import { Holding } from '../holding.model';
+import { Holding } from '../models/holding.model';
 
 @Component({
   selector: 'app-account-stats',

@@ -9,7 +9,7 @@ import { provideHttpClient, withFetch } from '@angular/common/http';
 
 import { routes } from './app.routes';
 import { APP_CONFIG } from './core/app-config';
-import { SettingsService } from './core/settings.service';
+import { SettingsService } from './core/services/settings.service';
 import { environment } from '../environments/environment';
 
 export const appConfig: ApplicationConfig = {

@@ -1,9 +1,9 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { Subject, of, throwError } from 'rxjs';
 import { vi } from 'vitest';
-import { Account } from '../account.model';
-import { Transaction } from '../transaction.model';
-import { TransactionService } from '../transaction.service';
+import { Account } from '../models/account.model';
+import { Transaction } from '../models/transaction.model';
+import { TransactionService } from '../services/transaction.service';
 import { CreateTransactionModalComponent } from './create-transaction-modal.component';
 
 const mockAccount: Account = {

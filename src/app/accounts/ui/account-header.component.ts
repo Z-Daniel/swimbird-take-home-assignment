@@ -1,7 +1,7 @@
 import { DecimalPipe, SlicePipe } from '@angular/common';
 import { ChangeDetectionStrategy, Component, input } from '@angular/core';
 import { StatTileComponent } from '../../shared/ui/stat-tile.component';
-import { Account } from '../account.model';
+import { Account } from '../models/account.model';
 import { AccountStatusPipe } from './account-status.pipe';
 import { TrendColorPipe } from '../../shared/ui/trend-color.pipe';
 

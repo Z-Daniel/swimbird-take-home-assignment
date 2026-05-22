@@ -1,6 +1,6 @@
 import { DecimalPipe } from '@angular/common';
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
-import { DashboardStateService } from '../dashboard-state.service';
+import { DashboardStateService } from '../services/dashboard-state.service';
 import { KpiCardComponent } from '../../shared/ui/kpi-card.component';
 import { TrendColorPipe } from '../../shared/ui/trend-color.pipe';
 

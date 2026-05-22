@@ -1,5 +1,5 @@
-import { Currency } from '../core/currency';
-import { SearchParams, SortParams } from '../core/params';
+import { Currency } from '../../core/currency';
+import { SearchParams, SortParams } from '../../core/params';
 
 export interface Holding {
   symbol: string;

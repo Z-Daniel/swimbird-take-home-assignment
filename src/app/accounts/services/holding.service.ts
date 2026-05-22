@@ -1,7 +1,7 @@
 import { inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { ApiService } from '../core/api.service';
-import { Holding, HoldingsParams } from './holding.model';
+import { ApiService } from '../../core/services/api.service';
+import { Holding, HoldingsParams } from '../models/holding.model';
 
 @Injectable({ providedIn: 'root' })
 export class HoldingService {

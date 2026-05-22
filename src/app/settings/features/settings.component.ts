@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
-import { Currency, Density, SettingsService, Theme } from '../../core/settings.service';
+import { Currency, Density, SettingsService, Theme } from '../../core/services/settings.service';
 
 interface Option<T> {
   value: T;

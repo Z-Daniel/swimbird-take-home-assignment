@@ -1,7 +1,7 @@
 import { DecimalPipe } from '@angular/common';
 import { ChangeDetectionStrategy, Component, inject, input } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
-import { Account } from '../account.model';
+import { Account } from '../models/account.model';
 import { AccountStatusPipe } from './account-status.pipe';
 import { TrendColorPipe } from '../../shared/ui/trend-color.pipe';
 

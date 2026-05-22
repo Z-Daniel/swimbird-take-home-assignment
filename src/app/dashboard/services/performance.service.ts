@@ -1,7 +1,7 @@
 import { inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { ApiService } from '../core/api.service';
-import { PerformanceParams, PerformancePoint } from './performance.model';
+import { ApiService } from '../../core/services/api.service';
+import { PerformanceParams, PerformancePoint } from '../models/performance.model';
 
 @Injectable({ providedIn: 'root' })
 export class PerformanceService {

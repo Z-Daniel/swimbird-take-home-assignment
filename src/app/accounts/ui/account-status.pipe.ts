@@ -1,5 +1,5 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { AccountStatus } from '../account.model';
+import { AccountStatus } from '../models/account.model';
 
 @Pipe({ name: 'accountStatus' })
 export class AccountStatusPipe implements PipeTransform {

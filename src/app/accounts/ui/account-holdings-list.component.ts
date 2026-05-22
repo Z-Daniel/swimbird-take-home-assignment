@@ -1,6 +1,6 @@
 import { DecimalPipe } from '@angular/common';
 import { ChangeDetectionStrategy, Component, input } from '@angular/core';
-import { Holding } from '../holding.model';
+import { Holding } from '../models/holding.model';
 
 @Component({
   selector: 'app-account-holdings-list',

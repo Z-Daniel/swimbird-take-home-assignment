@@ -4,7 +4,7 @@ import { AccountsListComponent } from '../../accounts/ui/accounts-list.component
 import { TopHoldingsSectionComponent } from '../../accounts/features/top-holdings-section.component';
 import { PerformanceChartComponent } from '../ui/performance-chart.component';
 import { PortfolioKpiStripComponent } from './portfolio-kpi-strip.component';
-import { DashboardStateService } from '../dashboard-state.service';
+import { DashboardStateService } from '../services/dashboard-state.service';
 
 @Component({
   selector: 'app-dashboard',

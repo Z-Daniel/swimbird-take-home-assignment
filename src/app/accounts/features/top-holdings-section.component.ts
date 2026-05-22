@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, Component, DestroyRef, inject, OnInit } from '
 import { map } from 'rxjs';
 import { SectionState } from '../../core/section-state';
 import { SectionShellComponent } from '../../shared/ui/section-shell.component';
-import { HoldingService } from '../holding.service';
+import { HoldingService } from '../services/holding.service';
 import { TopHoldingsListComponent } from '../ui/top-holdings-list.component';
 
 const TOP_N = 5;
