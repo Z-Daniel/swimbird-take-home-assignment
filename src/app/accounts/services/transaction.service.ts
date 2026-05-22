@@ -1,7 +1,7 @@
 import { inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { ApiService } from '../../core/services/api.service';
-import { PaginatedResult } from '../../core/paginated-result';
+import { PaginatedResult } from '../../core/models/paginated-result.model';
 import { CreateTransactionPayload, Transaction, TransactionsParams } from '../models/transaction.model';
 
 @Injectable({ providedIn: 'root' })

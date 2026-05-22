@@ -1,5 +1,5 @@
-import { Currency } from '../../core/currency';
-import { SearchParams, SortParams } from '../../core/params';
+import { Currency } from '../../core/models/currency.model';
+import { SearchParams, SortParams } from '../../core/models/params.model';
 
 export type AccountStatus = 'active' | 'restricted' | 'closed';
 export type AccountType = 'Investment' | 'Cash';

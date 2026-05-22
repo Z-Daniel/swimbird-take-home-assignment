@@ -1,5 +1,5 @@
-import { Currency } from '../../core/currency';
-import { PaginationParams, SearchParams, SortParams } from '../../core/params';
+import { Currency } from '../../core/models/currency.model';
+import { PaginationParams, SearchParams, SortParams } from '../../core/models/params.model';
 
 export type TransactionType = 'trade' | 'dividend' | 'fee' | 'interest' | 'cash';
 

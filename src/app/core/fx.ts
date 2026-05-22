@@ -1,4 +1,4 @@
-import { Currency } from './currency';
+import { Currency } from './models/currency.model';
 
 /** Mock FX rates expressed as SEK per 1 unit of source currency. */
 export const FX_TO_SEK: Record<Currency, number> = {
