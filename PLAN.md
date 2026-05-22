@@ -33,7 +33,7 @@
 - `TransactionService`: `getTransactions(id)`, `createTransaction(id, payload)` — injects `ApiService`
 - `HoldingsService`: `getHoldings(id)` — injects `ApiService`
 - `PerformanceService`: `getPerformance()` — injects `ApiService`
-- Each component manages its own async state with three signals: `loading`, `data`, and `error`; subscribes via `.subscribe()` and cancels on reload by unsubscribing the previous `Subscription`; cleans up on destroy via `DestroyRef.onDestroy()`
+- Async state is managed via `SectionState<T>` (see Architectural decisions); each feature component instantiates one `SectionState` per data source and renders it via `SectionShellComponent`
 - Verify each call returns data in the browser network tab
 - Write unit tests for `ApiService` (base URL prepending, correct HTTP method delegation)
 - Write unit tests for each domain service (correct endpoint paths, request params, error propagation)
@@ -143,7 +143,33 @@ src/app/
 ```
 
 - **`ApiService` as HTTP base layer** — a single `core/api.service.ts` injects `HttpClient` and the `APP_CONFIG` token and exposes typed `get<T>()` and `post<T>()` methods that prepend the base URL. Domain services inject `ApiService` rather than `HttpClient` directly, keeping the base URL and HTTP concerns out of domain code and making domain services easier to test.
-- **Manual signals for all async state** — each component owns three signals: `loading = signal(true)`, `data = signal<T | null>(null)`, and `error = signal<string | null>(null)`. Data fetching is triggered in `ngOnInit()` (constructor is reserved for DI only), calls `.subscribe()` directly; on reload the previous `Subscription` is cancelled before starting a new one; `DestroyRef.onDestroy()` registered in `ngOnInit()` handles final cleanup. This keeps state explicit and local, works identically for reads and writes, and avoids injection-context constraints that come with `toSignal()`-based helpers. `httpResource` was considered but skipped — developer preview in v21.
+- **`SectionState<T>` for async state** — a plain TypeScript class (not a service, not a component) that encapsulates the three-signal async state pattern: `loading = signal(true)`, `items = signal<T[]>([])`, and `error = signal<string | null>(null)`. Constructed with a `fetch` factory (a `() => Observable<T[]>` that is re-called on every `load()`), a fallback error message string, and a `DestroyRef` for cleanup. Calling `load()` unsubscribes any in-flight request, resets the three signals, then subscribes to the factory observable. Feature components declare one `SectionState` per data source and call `load()` in an `effect()` so the state re-fetches whenever route inputs change. This keeps state explicit and local, works identically for reads and writes, avoids injection-context constraints that come with `toSignal()`-based helpers, and colocates cancellation and cleanup logic in one place rather than scattered across component fields. `httpResource` was considered but skipped — developer preview in v21.
+
+```typescript
+// Usage in a feature component
+protected readonly holdingsState = new SectionState(
+  () => this.holdingService.getHoldings(this.id()),
+  'Failed to load holdings.',
+  inject(DestroyRef),
+);
+// In constructor:
+effect(() => { this.id(); this.holdingsState.load(); });
+```
+
+- **`SectionShellComponent` as the async-state presenter** — a generic dumb component (`shared/ui/section-shell.component.ts`) that accepts `loading`, `error`, `empty`, `emptyMessage`, and `title` inputs and a `retry` output. It renders a skeleton list while loading, an error message with a retry button on failure, an empty-state placeholder when the result set is empty, and `<ng-content />` for the happy path. Feature components pair one `SectionShellComponent` per `SectionState`, binding the signals directly to the inputs. This eliminates repeated `@if (loading()) … @else if (error()) … @else if (empty()) …` blocks and keeps all loading/error/empty UI in a single tested component.
+
+```html
+<app-section-shell
+  title="Holdings"
+  [loading]="holdingsState.loading()"
+  [error]="holdingsState.error()"
+  [empty]="holdingsState.items().length === 0"
+  emptyMessage="No holdings found."
+  (retry)="holdingsState.load()"
+>
+  <app-account-holdings-list [holdings]="holdingsState.items()" />
+</app-section-shell>
+```
 - **Reactive forms (`FormGroup` / `FormControl`)** — used for all form state. Stable, well-documented, and sufficient for the single create-transaction form in scope. Signal Forms (`@angular/forms/signals`) were considered but skipped — also experimental in v21.
 - **Route-based lazy loading** — each route loads its component via `loadComponent`. No preload strategy — the app has three routes and startup cost is negligible, so `PreloadAllModules` would add complexity with no measurable benefit.
 - **`withComponentInputBinding()`** — added to `provideRouter()` in `app.config.ts` so route parameters and query params are bound directly to component inputs, avoiding manual `ActivatedRoute` injection.
