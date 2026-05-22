@@ -25,7 +25,7 @@ import { ToastService } from '../../core/services/toast.service';
     <dialog
       #dialogEl
       aria-labelledby="tx-modal-title"
-      class="inset-0 m-0 h-dvh max-h-none w-screen max-w-none bg-(--color-surface) p-0 shadow-xl overflow-hidden backdrop:bg-black/50 sm:inset-auto sm:m-auto sm:h-auto sm:max-h-[90vh] sm:w-full sm:max-w-lg sm:rounded-xl"
+      class="inset-0 m-0 h-dvh max-h-none w-screen max-w-none bg-(--color-surface) p-0 shadow-xl overflow-hidden backdrop:bg-black/50 sm:m-auto sm:h-auto sm:max-h-[90vh] sm:w-full sm:max-w-lg sm:rounded-xl"
       (click)="onBackdropClick($event)"
       (close)="onDialogClose()"
     >
