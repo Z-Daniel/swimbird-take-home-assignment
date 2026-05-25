@@ -2,9 +2,6 @@ import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { NavItemComponent } from './nav-item.component';
 
-const MOBILE_LINK_CLASS =
-  'block rounded-md px-3 py-2 text-sm font-medium text-(--color-text-muted) transition-colors hover:bg-(--color-border) hover:text-(--color-text)';
-
 @Component({
   selector: 'app-header',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -50,8 +47,8 @@ const MOBILE_LINK_CLASS =
       @if (menuOpen()) {
         <nav id="mobile-menu" aria-label="Mobile navigation" class="sm:hidden border-t border-(--color-border) px-(--density-padding) py-3">
           <ul class="flex flex-col gap-1" role="list">
-            <app-nav-item link="/dashboard" [linkClass]="mobileLinkClass" (click)="closeMenu()">Dashboard</app-nav-item>
-            <app-nav-item link="/settings" [linkClass]="mobileLinkClass" (click)="closeMenu()">Settings</app-nav-item>
+            <app-nav-item link="/dashboard" variant="mobile" (click)="closeMenu()">Dashboard</app-nav-item>
+            <app-nav-item link="/settings" variant="mobile" (click)="closeMenu()">Settings</app-nav-item>
           </ul>
         </nav>
       }
@@ -60,7 +57,6 @@ const MOBILE_LINK_CLASS =
 })
 export class AppHeaderComponent {
   protected readonly menuOpen = signal(false);
-  protected readonly mobileLinkClass = MOBILE_LINK_CLASS;
 
   protected toggleMenu(): void {
     this.menuOpen.update((v) => !v);

@@ -24,7 +24,7 @@ import { SkeletonListComponent } from './skeleton-list.component';
           (retry)="retry.emit()"
         />
       } @else if (empty()) {
-        <app-empty-state [message]="emptyMessage()" />
+        <app-empty-state>{{ emptyMessage() }}</app-empty-state>
       } @else {
         <ng-content />
       }
