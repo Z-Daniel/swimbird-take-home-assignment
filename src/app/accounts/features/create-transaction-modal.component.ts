@@ -25,11 +25,11 @@ import { ToastService } from '../../core/services/toast.service';
     <dialog
       #dialogEl
       aria-labelledby="tx-modal-title"
-      class="inset-0 m-0 h-dvh max-h-none w-screen max-w-none bg-(--color-surface) p-0 shadow-xl overflow-hidden backdrop:bg-black/50 sm:m-auto sm:h-auto sm:max-h-[90vh] sm:w-full sm:max-w-lg sm:rounded-xl"
+      class="inset-0 m-0 max-sm:h-dvh max-sm:max-h-none max-sm:w-screen max-sm:max-w-none bg-(--color-surface) p-0 shadow-xl overflow-hidden backdrop:bg-black/50 sm:m-auto sm:max-h-[90vh] sm:w-full sm:max-w-lg sm:rounded-xl"
       (click)="onBackdropClick($event)"
       (close)="onDialogClose()"
     >
-      <form [formGroup]="form" (ngSubmit)="onSubmit()" novalidate class="flex flex-col h-full sm:h-auto sm:max-h-[90vh]">
+      <form [formGroup]="form" (ngSubmit)="onSubmit()" novalidate class="flex flex-col max-sm:h-full">
 
         <div class="flex items-start justify-between border-b border-(--color-border) px-6 py-4">
           <div>
@@ -49,7 +49,7 @@ import { ToastService } from '../../core/services/toast.service';
           </button>
         </div>
 
-        <div class="flex-1 space-y-5 overflow-y-auto px-6 py-5">
+        <div class="max-sm:flex-1 min-h-0 space-y-5 overflow-y-auto px-6 py-5">
           @let errors = fieldErrors();
 
           @if (serverError()) {
