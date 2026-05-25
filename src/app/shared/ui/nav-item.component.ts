@@ -9,7 +9,7 @@ import { RouterLink, RouterLinkActive } from '@angular/router';
     <li>
       <a
         [routerLink]="link()"
-        routerLinkActive
+        routerLinkActive #rla="routerLinkActive"
         [ariaCurrentWhenActive]="'page'"
         [class]="rla.isActive ? 'text-sm font-medium text-blue-600 transition-colors' : linkClass()"
       >
