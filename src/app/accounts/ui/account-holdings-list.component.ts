@@ -11,7 +11,7 @@ import { Holding } from '../models/holding.model';
     <div class="hidden md:block overflow-x-auto">
       <table class="w-full text-sm">
         <thead>
-          <tr class="border-b border-(--color-border) text-left text-xs font-medium uppercase tracking-wide text-(--color-text-muted)">
+          <tr class="border-b border-border text-left text-xs font-medium uppercase tracking-wide text-muted">
             <th scope="col" class="py-3 pr-4">Symbol</th>
             <th scope="col" class="py-3 pr-4">Name</th>
             <th scope="col" class="py-3 pr-4 text-right">Qty</th>
@@ -21,14 +21,14 @@ import { Holding } from '../models/holding.model';
         </thead>
         <tbody>
           @for (holding of holdings(); track holding.symbol) {
-            <tr class="border-b border-(--color-border)">
-              <td class="py-3 pr-4 font-medium text-(--color-text)">{{ holding.symbol }}</td>
-              <td class="py-3 pr-4 text-(--color-text-muted)">{{ holding.name }}</td>
-              <td class="py-3 pr-4 text-right text-(--color-text)">{{ holding.quantity | number:'1.0-0' }}</td>
-              <td class="py-3 pr-4 text-right font-medium text-(--color-text)">
+            <tr class="border-b border-border">
+              <td class="py-3 pr-4 font-medium text-foreground">{{ holding.symbol }}</td>
+              <td class="py-3 pr-4 text-muted">{{ holding.name }}</td>
+              <td class="py-3 pr-4 text-right text-foreground">{{ holding.quantity | number:'1.0-0' }}</td>
+              <td class="py-3 pr-4 text-right font-medium text-foreground">
                 {{ holding.marketValue | number:'1.0-0' }}
               </td>
-              <td class="py-3 text-right text-(--color-text-muted)">
+              <td class="py-3 text-right text-muted">
                 {{ holding.weight | number:'1.1-1' }}%
               </td>
             </tr>
@@ -38,17 +38,17 @@ import { Holding } from '../models/holding.model';
     </div>
 
     <!-- Mobile cards (< md) -->
-    <ul class="flex flex-col divide-y divide-(--color-border) md:hidden" role="list">
+    <ul class="flex flex-col divide-y divide-border md:hidden" role="list">
       @for (holding of holdings(); track holding.symbol) {
         <li class="flex items-center justify-between gap-4 py-3">
           <div class="min-w-0">
-            <p class="font-medium text-(--color-text)">{{ holding.symbol }}</p>
-            <p class="truncate text-xs text-(--color-text-muted)">{{ holding.name }}</p>
-            <p class="text-xs text-(--color-text-muted)">Qty {{ holding.quantity | number:'1.0-0' }}</p>
+            <p class="font-medium text-foreground">{{ holding.symbol }}</p>
+            <p class="truncate text-xs text-muted">{{ holding.name }}</p>
+            <p class="text-xs text-muted">Qty {{ holding.quantity | number:'1.0-0' }}</p>
           </div>
           <div class="shrink-0 text-right">
-            <p class="font-medium text-(--color-text)">{{ holding.marketValue | number:'1.0-0' }}</p>
-            <p class="text-xs text-(--color-text-muted)">{{ holding.weight | number:'1.1-1' }}%</p>
+            <p class="font-medium text-foreground">{{ holding.marketValue | number:'1.0-0' }}</p>
+            <p class="text-xs text-muted">{{ holding.weight | number:'1.1-1' }}%</p>
           </div>
         </li>
       }

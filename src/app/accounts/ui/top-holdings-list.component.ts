@@ -7,18 +7,18 @@ import { Holding } from '../models/holding.model';
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [DecimalPipe],
   template: `
-    <ol role="list" class="divide-y divide-(--color-border)">
+    <ol role="list" class="divide-y divide-border">
       @for (holding of holdings(); track holding.symbol) {
         <li class="flex items-center justify-between gap-4 py-3">
           <div class="min-w-0">
-            <p class="font-medium text-(--color-text)">{{ holding.symbol }}</p>
-            <p class="truncate text-xs text-(--color-text-muted)">{{ holding.name }}</p>
+            <p class="font-medium text-foreground">{{ holding.symbol }}</p>
+            <p class="truncate text-xs text-muted">{{ holding.name }}</p>
           </div>
           <div class="text-right shrink-0">
-            <p class="font-medium text-(--color-text)">
+            <p class="font-medium text-foreground">
               {{ holding.marketValue | number:'1.0-0' }}
             </p>
-            <p class="text-xs text-(--color-text-muted)">{{ holding.weight | number:'1.1-1' }}%</p>
+            <p class="text-xs text-muted">{{ holding.weight | number:'1.1-1' }}%</p>
           </div>
         </li>
       }

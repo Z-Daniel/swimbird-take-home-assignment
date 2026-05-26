@@ -10,7 +10,7 @@ import { SkeletonListComponent } from './skeleton-list.component';
   template: `
     <section [attr.aria-labelledby]="headingId() ?? null">
       @if (title()) {
-        <h2 [id]="headingId()" class="mb-4 text-lg font-semibold text-(--color-text)">
+        <h2 [id]="headingId()" class="mb-4 text-lg font-semibold text-foreground">
           {{ title() }}
         </h2>
       }

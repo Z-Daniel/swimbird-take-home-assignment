@@ -34,7 +34,7 @@ import { CreateTransactionModalComponent } from './create-transaction-modal.comp
     <div class="flex flex-col gap-6">
       <a
         routerLink="/dashboard"
-        class="flex w-fit items-center gap-1 text-sm text-(--color-text-muted) transition-colors hover:text-(--color-text)"
+        class="flex w-fit items-center gap-1 text-sm text-muted transition-colors hover:text-foreground"
       >
         ← Back to dashboard
       </a>
@@ -56,7 +56,7 @@ import { CreateTransactionModalComponent } from './create-transaction-modal.comp
           <button
             (click)="createTransactionModal().open()"
             aria-haspopup="dialog"
-            class="fixed bottom-6 left-1/2 z-10 -translate-x-1/2 cursor-pointer rounded-full bg-blue-600 px-6 py-3 text-sm font-medium text-white shadow-lg transition-colors hover:bg-blue-700 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 sm:static sm:translate-x-0 sm:shrink-0 sm:rounded-lg sm:px-4 sm:py-2 sm:shadow-none"
+            class="fixed bottom-6 left-1/2 z-10 -translate-x-1/2 cursor-pointer rounded-full bg-primary px-6 py-3 text-sm font-medium text-white shadow-lg transition-colors hover:bg-primary-dark focus:outline-none focus-visible:ring-2 focus-visible:ring-primary-ring focus-visible:ring-offset-2 sm:static sm:translate-x-0 sm:shrink-0 sm:rounded-lg sm:px-4 sm:py-2 sm:shadow-none"
           >
             + Add transaction
           </button>

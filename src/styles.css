@@ -3,28 +3,85 @@
 /* Class-based dark mode — SettingsService applies .dark to <html> */
 @custom-variant dark (&:where(.dark, .dark *));
 
-/* Light theme (default) */
-:root {
-  --color-bg: #ffffff;
-  --color-surface: #f8fafc;
-  --color-border: #e2e8f0;
-  --color-text: #0f172a;
-  --color-text-muted: #64748b;
+/*
+  Semantic color tokens.
+  All values live here — components never reference raw color scales.
+  Dark-mode overrides are in .dark below; utilities auto-switch via CSS variables.
+*/
+@theme {
+  /* ── Surface / layout ───────────────────────────────────────────── */
+  --color-canvas:     #ffffff;   /* page background                  */
+  --color-surface:    #f8fafc;   /* card / panel background          */
+  --color-border:     #e2e8f0;   /* dividers, input borders          */
+  --color-foreground: #0f172a;   /* primary text                     */
+  --color-muted:      #64748b;   /* secondary / placeholder text     */
 
+  /* ── Primary action (blue) ──────────────────────────────────────── */
+  --color-primary:      #2563eb; /* button fill, active nav          */
+  --color-primary-dark: #1d4ed8; /* hover shade                      */
+  --color-primary-ring: #3b82f6; /* focus ring                       */
+
+  /* ── Danger (red) ───────────────────────────────────────────────── */
+  --color-danger:        #dc2626; /* field-error text / border        */
+  --color-danger-solid:  #dc2626; /* solid bg (toast) — constant      */
+  --color-danger-bg:     #fef2f2; /* alert panel background           */
+  --color-danger-dim:    #fca5a5; /* alert panel border               */
+  --color-danger-fg:     #b91c1c; /* text on danger-bg surface        */
+
+  /* ── Success (green) ────────────────────────────────────────────── */
+  --color-success:       #16a34a; /* positive trend text              */
+  --color-success-solid: #16a34a; /* solid bg (toast) — constant      */
+  --color-success-bg:    #dcfce7; /* badge / alert background         */
+  --color-success-fg:    #15803d; /* text on success-bg surface       */
+
+  /* ── Warning (amber) ────────────────────────────────────────────── */
+  --color-warning-bg: #fef3c7;   /* restricted-account badge bg      */
+  --color-warning-fg: #b45309;   /* restricted-account badge text    */
+
+  /* ── Info (blue badge — trade) ──────────────────────────────────── */
+  --color-info-bg: #dbeafe;
+  --color-info-fg: #1d4ed8;
+
+  /* ── Accent (purple badge — interest) ──────────────────────────── */
+  --color-accent-bg: #f3e8ff;
+  --color-accent-fg: #7e22ce;
+}
+
+/* Dark-mode overrides */
+.dark {
+  --color-canvas:     #020617;
+  --color-surface:    #0f172a;
+  --color-border:     #1e293b;
+  --color-foreground: #f8fafc;
+  --color-muted:      #94a3b8;
+
+  /* danger-solid and success-solid intentionally NOT overridden
+     so toast backgrounds stay saturated in dark mode            */
+  --color-danger:        #f87171;
+  --color-danger-bg:     #450a0a;
+  --color-danger-dim:    #991b1b;
+  --color-danger-fg:     #fca5a5;
+
+  --color-success:       #4ade80;
+  --color-success-bg:    #14532d;
+  --color-success-fg:    #86efac;
+
+  --color-warning-bg: #78350f;
+  --color-warning-fg: #fcd34d;
+
+  --color-info-bg: #1e3a8a;
+  --color-info-fg: #93c5fd;
+
+  --color-accent-bg: #581c87;
+  --color-accent-fg: #d8b4fe;
+}
+
+/* Density variants */
+:root {
   --density-gap: 1rem;
   --density-padding: 1rem;
 }
 
-/* Dark theme */
-.dark {
-  --color-bg: #020617;
-  --color-surface: #0f172a;
-  --color-border: #1e293b;
-  --color-text: #f8fafc;
-  --color-text-muted: #94a3b8;
-}
-
-/* Density variants */
 .density-compact {
   --density-gap: 0.5rem;
   --density-padding: 0.5rem;

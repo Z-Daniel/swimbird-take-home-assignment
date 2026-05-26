@@ -5,7 +5,7 @@
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <div class="py-12 text-center">
-      <p class="text-sm text-(--color-text-muted)"><ng-content /></p>
+      <p class="text-sm text-muted"><ng-content /></p>
     </div>
   `,
 })

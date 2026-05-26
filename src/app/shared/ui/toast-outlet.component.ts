@@ -15,8 +15,8 @@ import { ToastService } from '../../core/services/toast.service';
           role="status"
           class="flex items-center gap-3 rounded-lg px-4 py-3 text-sm font-medium shadow-lg"
           [class]="toast.type === 'success'
-            ? 'bg-green-600 text-white'
-            : 'bg-red-600 text-white'"
+            ? 'bg-success-solid text-white'
+            : 'bg-danger-solid text-white'"
         >
           <span>{{ toast.message }}</span>
           <button

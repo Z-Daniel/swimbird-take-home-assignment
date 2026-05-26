@@ -7,11 +7,11 @@ import { NavItemComponent } from './nav-item.component';
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [RouterLink, NavItemComponent],
   template: `
-    <header class="sticky top-0 z-10 border-b border-(--color-border) bg-(--color-surface)">
+    <header class="sticky top-0 z-10 border-b border-border bg-surface">
       <div class="mx-auto flex max-w-7xl items-center justify-between px-(--density-padding) py-3">
         <!-- Logo + desktop nav grouped on the left -->
         <div class="flex items-center gap-6">
-          <a routerLink="/dashboard" class="text-lg font-semibold text-(--color-text) no-underline">Portfolio</a>
+          <a routerLink="/dashboard" class="text-lg font-semibold text-foreground no-underline">Portfolio</a>
 
           <!-- Desktop nav (sm+) -->
           <nav aria-label="Main navigation" class="hidden sm:block">
@@ -25,7 +25,7 @@ import { NavItemComponent } from './nav-item.component';
         <!-- Hamburger button (< sm) -->
         <button
           type="button"
-          class="sm:hidden cursor-pointer rounded-md p-1.5 text-(--color-text-muted) transition-colors hover:text-(--color-text) focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500"
+          class="sm:hidden cursor-pointer rounded-md p-1.5 text-muted transition-colors hover:text-foreground focus:outline-none focus-visible:ring-2 focus-visible:ring-primary-ring"
           [attr.aria-expanded]="menuOpen()"
           aria-controls="mobile-menu"
           aria-label="Toggle menu"
@@ -45,7 +45,7 @@ import { NavItemComponent } from './nav-item.component';
 
       <!-- Mobile menu (< sm) -->
       @if (menuOpen()) {
-        <nav id="mobile-menu" aria-label="Mobile navigation" class="sm:hidden border-t border-(--color-border) px-(--density-padding) py-3">
+        <nav id="mobile-menu" aria-label="Mobile navigation" class="sm:hidden border-t border-border px-(--density-padding) py-3">
           <ul class="flex flex-col gap-1" role="list">
             <app-nav-item link="/dashboard" variant="mobile" (click)="closeMenu()">Dashboard</app-nav-item>
             <app-nav-item link="/settings" variant="mobile" (click)="closeMenu()">Settings</app-nav-item>

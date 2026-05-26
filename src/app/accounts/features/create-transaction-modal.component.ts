@@ -25,24 +25,24 @@ import { ToastService } from '../../core/services/toast.service';
     <dialog
       #dialogEl
       aria-labelledby="tx-modal-title"
-      class="inset-0 m-0 max-sm:h-dvh max-sm:max-h-none max-sm:w-screen max-sm:max-w-none bg-(--color-surface) p-0 shadow-xl overflow-hidden backdrop:bg-black/50 sm:m-auto sm:max-h-[90vh] sm:w-full sm:max-w-lg sm:rounded-xl"
+      class="inset-0 m-0 max-sm:h-dvh max-sm:max-h-none max-sm:w-screen max-sm:max-w-none bg-surface p-0 shadow-xl overflow-hidden backdrop:bg-black/50 sm:m-auto sm:max-h-[90vh] sm:w-full sm:max-w-lg sm:rounded-xl"
       (click)="onBackdropClick($event)"
       (close)="onDialogClose()"
     >
       <form [formGroup]="form" (ngSubmit)="onSubmit()" novalidate class="flex flex-col max-sm:h-full">
 
-        <div class="flex items-start justify-between border-b border-(--color-border) px-6 py-4">
+        <div class="flex items-start justify-between border-b border-border px-6 py-4">
           <div>
-            <h2 id="tx-modal-title" class="text-lg font-semibold text-(--color-text)">Add transaction</h2>
+            <h2 id="tx-modal-title" class="text-lg font-semibold text-foreground">Add transaction</h2>
             @if (account(); as a) {
-              <p class="text-sm text-(--color-text-muted)">{{ a.name }} · {{ a.currency }}</p>
+              <p class="text-sm text-muted">{{ a.name }} · {{ a.currency }}</p>
             }
           </div>
           <button
             type="button"
             (click)="close()"
             [disabled]="isSubmitting"
-            class="cursor-pointer rounded-md p-1 text-(--color-text-muted) transition-colors hover:text-(--color-text) disabled:cursor-not-allowed disabled:opacity-50"
+            class="cursor-pointer rounded-md p-1 text-muted transition-colors hover:text-foreground disabled:cursor-not-allowed disabled:opacity-50"
             aria-label="Close"
           >
             ✕
@@ -53,34 +53,34 @@ import { ToastService } from '../../core/services/toast.service';
           @let errors = fieldErrors();
 
           @if (serverError()) {
-            <div role="alert" class="rounded-lg border border-red-300 bg-red-50 px-4 py-3 text-sm text-red-700 dark:border-red-800 dark:bg-red-950 dark:text-red-400">
+            <div role="alert" class="rounded-lg border border-danger-dim bg-danger-bg px-4 py-3 text-sm text-danger-fg">
               {{ serverError() }}
             </div>
           }
 
           <div>
-            <label for="tx-date" class="mb-1 block text-sm font-medium text-(--color-text)">Date</label>
+            <label for="tx-date" class="mb-1 block text-sm font-medium text-foreground">Date</label>
             <input
               id="tx-date"
               type="date"
               formControlName="date"
-              class="w-full rounded-lg border bg-(--color-surface) px-3 py-2 text-sm text-(--color-text) focus:outline-none focus:ring-2 focus:ring-blue-500"
-              [class]="(controls.date.invalid && controls.date.touched) || errors.date ? 'border-red-500' : 'border-(--color-border)'"
+              class="w-full rounded-lg border bg-surface px-3 py-2 text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-primary-ring"
+              [class]="(controls.date.invalid && controls.date.touched) || errors.date ? 'border-danger' : 'border-border'"
             />
             @if ((controls.date.invalid && controls.date.touched) || errors.date) {
-              <p class="mt-1 text-xs text-red-600 dark:text-red-400">
+              <p class="mt-1 text-xs text-danger">
                 {{ errors.date ?? 'Date is required.' }}
               </p>
             }
           </div>
 
           <div>
-            <label for="tx-type" class="mb-1 block text-sm font-medium text-(--color-text)">Type</label>
+            <label for="tx-type" class="mb-1 block text-sm font-medium text-foreground">Type</label>
             <select
               id="tx-type"
               formControlName="type"
-              class="w-full rounded-lg border bg-(--color-surface) px-3 py-2 text-sm text-(--color-text) focus:outline-none focus:ring-2 focus:ring-blue-500"
-              [class]="(controls.type.invalid && controls.type.touched) || errors.type ? 'border-red-500' : 'border-(--color-border)'"
+              class="w-full rounded-lg border bg-surface px-3 py-2 text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-primary-ring"
+              [class]="(controls.type.invalid && controls.type.touched) || errors.type ? 'border-danger' : 'border-border'"
             >
               <option value="trade">Trade</option>
               <option value="dividend">Dividend</option>
@@ -89,14 +89,14 @@ import { ToastService } from '../../core/services/toast.service';
               <option value="cash">Cash</option>
             </select>
             @if ((controls.type.invalid && controls.type.touched) || errors.type) {
-              <p class="mt-1 text-xs text-red-600 dark:text-red-400">
+              <p class="mt-1 text-xs text-danger">
                 {{ errors.type ?? 'Type is required.' }}
               </p>
             }
           </div>
 
           <div>
-            <label for="tx-amount" class="mb-1 block text-sm font-medium text-(--color-text)">
+            <label for="tx-amount" class="mb-1 block text-sm font-medium text-foreground">
               Amount
               @if (account(); as a) { ({{ a.currency }}) }
             </label>
@@ -106,29 +106,29 @@ import { ToastService } from '../../core/services/toast.service';
               formControlName="amount"
               step="0.01"
               placeholder="e.g. -2400.00"
-              class="w-full rounded-lg border bg-(--color-surface) px-3 py-2 text-sm text-(--color-text) focus:outline-none focus:ring-2 focus:ring-blue-500"
-              [class]="(controls.amount.invalid && controls.amount.touched) || errors.amount ? 'border-red-500' : 'border-(--color-border)'"
+              class="w-full rounded-lg border bg-surface px-3 py-2 text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-primary-ring"
+              [class]="(controls.amount.invalid && controls.amount.touched) || errors.amount ? 'border-danger' : 'border-border'"
             />
-            <p class="mt-1 text-xs text-(--color-text-muted)">Negative for outflows</p>
+            <p class="mt-1 text-xs text-muted">Negative for outflows</p>
             @if ((controls.amount.invalid && controls.amount.touched) || errors.amount) {
-              <p class="mt-1 text-xs text-red-600 dark:text-red-400">
+              <p class="mt-1 text-xs text-danger">
                 {{ errors.amount ?? 'Amount is required.' }}
               </p>
             }
           </div>
 
           <div>
-            <label for="tx-description" class="mb-1 block text-sm font-medium text-(--color-text)">Description</label>
+            <label for="tx-description" class="mb-1 block text-sm font-medium text-foreground">Description</label>
             <input
               id="tx-description"
               type="text"
               formControlName="description"
               placeholder="e.g. AAPL sell — 20 shares"
-              class="w-full rounded-lg border bg-(--color-surface) px-3 py-2 text-sm text-(--color-text) focus:outline-none focus:ring-2 focus:ring-blue-500"
-              [class]="(controls.description.invalid && controls.description.touched) || errors.description ? 'border-red-500' : 'border-(--color-border)'"
+              class="w-full rounded-lg border bg-surface px-3 py-2 text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-primary-ring"
+              [class]="(controls.description.invalid && controls.description.touched) || errors.description ? 'border-danger' : 'border-border'"
             />
             @if ((controls.description.invalid && controls.description.touched) || errors.description) {
-              <p class="mt-1 text-xs text-red-600 dark:text-red-400">
+              <p class="mt-1 text-xs text-danger">
                 {{ errors.description ?? 'Description is required.' }}
               </p>
             }
@@ -136,19 +136,19 @@ import { ToastService } from '../../core/services/toast.service';
 
         </div>
 
-        <div class="flex flex-col-reverse gap-3 border-t border-(--color-border) px-6 py-4 sm:flex-row sm:justify-end">
+        <div class="flex flex-col-reverse gap-3 border-t border-border px-6 py-4 sm:flex-row sm:justify-end">
           <button
             type="button"
             (click)="close()"
             [disabled]="isSubmitting"
-            class="w-full cursor-pointer rounded-lg px-4 py-2.5 text-sm font-medium text-(--color-text-muted) transition-colors hover:text-(--color-text) disabled:cursor-not-allowed disabled:opacity-50 sm:w-auto sm:py-2"
+            class="w-full cursor-pointer rounded-lg px-4 py-2.5 text-sm font-medium text-muted transition-colors hover:text-foreground disabled:cursor-not-allowed disabled:opacity-50 sm:w-auto sm:py-2"
           >
             Cancel
           </button>
           <button
             type="submit"
             [disabled]="form.invalid || isSubmitting"
-            class="flex w-full cursor-pointer items-center justify-center gap-2 rounded-lg bg-blue-600 px-4 py-2.5 text-sm font-medium text-white transition-colors hover:bg-blue-700 disabled:cursor-not-allowed disabled:opacity-50 sm:w-auto sm:py-2"
+            class="flex w-full cursor-pointer items-center justify-center gap-2 rounded-lg bg-primary px-4 py-2.5 text-sm font-medium text-white transition-colors hover:bg-primary-dark disabled:cursor-not-allowed disabled:opacity-50 sm:w-auto sm:py-2"
           >
             @if (isSubmitting) {
               <span class="h-4 w-4 animate-spin rounded-full border-2 border-white border-t-transparent" aria-hidden="true"></span>

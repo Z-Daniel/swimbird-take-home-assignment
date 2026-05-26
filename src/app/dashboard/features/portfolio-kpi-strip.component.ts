@@ -17,7 +17,7 @@ import { TrendColorPipe } from '../../shared/ui/trend-color.pipe';
         [loading]="state.kpiLoading()"
         valueClass="flex items-baseline gap-2"
       >
-        <span class="text-2xl font-bold text-(--color-text)">
+        <span class="text-2xl font-bold text-foreground">
           {{ state.totalValue() | number:'1.0-0' }} {{ state.currency() }}
         </span>
         @let change = state.changeToday();

@@ -4,13 +4,13 @@ import { RouterLink, RouterLinkActive } from '@angular/router';
 type NavVariant = 'desktop' | 'mobile';
 
 const VARIANT_CLASS: Record<NavVariant, string> = {
-  desktop: 'text-sm font-medium text-(--color-text-muted) transition-colors hover:text-(--color-text)',
-  mobile: 'block rounded-md px-3 py-2 text-sm font-medium text-(--color-text-muted) transition-colors hover:bg-(--color-border) hover:text-(--color-text)',
+  desktop: 'text-sm font-medium text-muted transition-colors hover:text-foreground',
+  mobile: 'block rounded-md px-3 py-2 text-sm font-medium text-muted transition-colors hover:bg-border hover:text-foreground',
 };
 
 const ACTIVE_CLASS: Record<NavVariant, string> = {
-  desktop: 'text-sm font-medium text-blue-600 transition-colors',
-  mobile: 'block rounded-md px-3 py-2 text-sm font-medium text-blue-600 transition-colors',
+  desktop: 'text-sm font-medium text-primary transition-colors',
+  mobile: 'block rounded-md px-3 py-2 text-sm font-medium text-primary transition-colors',
 };
 
 @Component({

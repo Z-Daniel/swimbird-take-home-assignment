@@ -6,11 +6,11 @@ export class AccountStatusPipe implements PipeTransform {
   transform(status: AccountStatus): string {
     switch (status) {
       case 'active':
-        return 'bg-green-100 text-green-700 dark:bg-green-900 dark:text-green-300';
+        return 'bg-success-bg text-success-fg';
       case 'restricted':
-        return 'bg-amber-100 text-amber-700 dark:bg-amber-900 dark:text-amber-300';
+        return 'bg-warning-bg text-warning-fg';
       case 'closed':
-        return 'bg-(--color-border) text-(--color-text-muted)';
+        return 'bg-border text-muted';
     }
   }
 }

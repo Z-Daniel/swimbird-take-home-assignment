@@ -6,15 +6,15 @@ export class TransactionTypePipe implements PipeTransform {
   transform(type: TransactionType): string {
     switch (type) {
       case 'trade':
-        return 'bg-blue-100 text-blue-700 dark:bg-blue-900 dark:text-blue-300';
+        return 'bg-info-bg text-info-fg';
       case 'dividend':
-        return 'bg-green-100 text-green-700 dark:bg-green-900 dark:text-green-300';
+        return 'bg-success-bg text-success-fg';
       case 'fee':
-        return 'bg-red-100 text-red-700 dark:bg-red-900 dark:text-red-300';
+        return 'bg-danger-bg text-danger-fg';
       case 'interest':
-        return 'bg-purple-100 text-purple-700 dark:bg-purple-900 dark:text-purple-300';
+        return 'bg-accent-bg text-accent-fg';
       case 'cash':
-        return 'bg-(--color-border) text-(--color-text-muted)';
+        return 'bg-border text-muted';
     }
   }
 }

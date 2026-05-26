@@ -13,7 +13,7 @@ import { TrendColorPipe } from '../../shared/ui/trend-color.pipe';
     <div class="hidden md:block overflow-x-auto">
       <table class="w-full text-sm">
         <thead>
-          <tr class="border-b border-(--color-border) text-left text-xs font-medium uppercase tracking-wide text-(--color-text-muted)">
+          <tr class="border-b border-border text-left text-xs font-medium uppercase tracking-wide text-muted">
             <th scope="col" class="py-3 pr-4">Date</th>
             <th scope="col" class="py-3 pr-4">Type</th>
             <th scope="col" class="py-3 pr-4 text-right">Amount</th>
@@ -22,8 +22,8 @@ import { TrendColorPipe } from '../../shared/ui/trend-color.pipe';
         </thead>
         <tbody>
           @for (tx of transactions(); track tx.id) {
-            <tr class="border-b border-(--color-border)">
-              <td class="py-3 pr-4 text-(--color-text-muted)">{{ tx.date | slice:0:10 }}</td>
+            <tr class="border-b border-border">
+              <td class="py-3 pr-4 text-muted">{{ tx.date | slice:0:10 }}</td>
               <td class="py-3 pr-4">
                 <span class="rounded-full px-2 py-0.5 text-xs font-medium" [class]="tx.type | transactionType">
                   {{ tx.type }}
@@ -32,7 +32,7 @@ import { TrendColorPipe } from '../../shared/ui/trend-color.pipe';
               <td class="py-3 pr-4 text-right font-medium" [class]="tx.amount | trendColor">
                 {{ tx.amount >= 0 ? '+' : '' }}{{ tx.amount | number:'1.2-2' }}
               </td>
-              <td class="hidden lg:table-cell py-3 text-(--color-text-muted)">{{ tx.description }}</td>
+              <td class="hidden lg:table-cell py-3 text-muted">{{ tx.description }}</td>
             </tr>
           }
         </tbody>
@@ -40,7 +40,7 @@ import { TrendColorPipe } from '../../shared/ui/trend-color.pipe';
     </div>
 
     <!-- Mobile cards (< md) -->
-    <ul class="flex flex-col divide-y divide-(--color-border) md:hidden" role="list">
+    <ul class="flex flex-col divide-y divide-border md:hidden" role="list">
       @for (tx of transactions(); track tx.id) {
         <li class="py-3">
           <div class="flex items-start justify-between gap-3">
@@ -49,9 +49,9 @@ import { TrendColorPipe } from '../../shared/ui/trend-color.pipe';
                 <span class="rounded-full px-2 py-0.5 text-xs font-medium" [class]="tx.type | transactionType">
                   {{ tx.type }}
                 </span>
-                <span class="text-xs text-(--color-text-muted)">{{ tx.date | slice:0:10 }}</span>
+                <span class="text-xs text-muted">{{ tx.date | slice:0:10 }}</span>
               </div>
-              <p class="mt-1 truncate text-sm text-(--color-text-muted)">{{ tx.description }}</p>
+              <p class="mt-1 truncate text-sm text-muted">{{ tx.description }}</p>
             </div>
             <p class="shrink-0 font-medium" [class]="tx.amount | trendColor">
               {{ tx.amount >= 0 ? '+' : '' }}{{ tx.amount | number:'1.2-2' }}
