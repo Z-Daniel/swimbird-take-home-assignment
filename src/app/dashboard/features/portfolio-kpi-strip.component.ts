@@ -9,7 +9,7 @@ import { TrendColorPipe } from '../../shared/ui/trend-color.pipe';
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [DecimalPipe, TrendColorPipe, KpiCardComponent],
   template: `
-    <dl class="grid grid-cols-2 gap-4 lg:grid-cols-3">
+    <dl class="grid grid-cols-2 gap-(--density-gap) lg:grid-cols-3">
 
       <app-kpi-card
         class="col-span-2 lg:col-span-1"

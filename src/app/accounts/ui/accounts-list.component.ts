@@ -52,12 +52,12 @@ import { TrendColorPipe } from '../../shared/ui/trend-color.pipe';
     </div>
 
     <!-- Mobile cards (< md) -->
-    <ul class="flex flex-col gap-3 md:hidden" role="list">
+    <ul class="flex flex-col gap-(--density-gap) md:hidden" role="list">
       @for (account of accounts(); track account.id) {
         <li>
           <a
             [routerLink]="['/accounts', account.id]"
-            class="block rounded-lg border border-border bg-surface p-4 no-underline transition-colors hover:bg-border focus:outline-none focus-visible:ring-2 focus-visible:ring-primary-ring"
+            class="block rounded-lg border border-border bg-surface p-(--density-padding) no-underline transition-colors hover:bg-border focus:outline-none focus-visible:ring-2 focus-visible:ring-primary-ring"
           >
             <div class="flex items-start justify-between gap-2">
               <div>

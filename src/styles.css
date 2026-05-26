@@ -78,16 +78,16 @@
 
 /* Density variants */
 :root {
-  --density-gap: 1rem;
-  --density-padding: 1rem;
+  --density-gap:     1.5rem;  /* 24px — space between major sections */
+  --density-padding: 1rem;    /* 16px — internal card / panel padding */
 }
 
 .density-compact {
-  --density-gap: 0.5rem;
+  --density-gap:     0.75rem;
   --density-padding: 0.5rem;
 }
 
 .density-comfortable {
-  --density-gap: 1.5rem;
+  --density-gap:     2.5rem;
   --density-padding: 1.5rem;
 }

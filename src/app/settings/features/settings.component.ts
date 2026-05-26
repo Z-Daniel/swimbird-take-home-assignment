@@ -31,10 +31,10 @@ const CURRENCY_OPTIONS: Option<Currency>[] = [
     <div class="mx-auto max-w-2xl">
       <h1 class="mb-8 text-2xl font-bold text-foreground">Settings</h1>
 
-        <div class="space-y-8">
+        <div class="flex flex-col gap-(--density-gap)">
 
           <!-- Appearance -->
-          <section id="appearance" class="rounded-xl border border-border bg-surface p-6 space-y-6">
+          <section id="appearance" class="rounded-xl border border-border bg-surface p-(--density-padding) flex flex-col gap-(--density-gap)">
             <div class="space-y-1">
               <h2 class="text-base font-semibold text-foreground">Appearance</h2>
               <p class="text-sm text-muted">Choose how the interface looks.</p>
@@ -82,7 +82,7 @@ const CURRENCY_OPTIONS: Option<Currency>[] = [
           </section>
 
           <!-- Preferences -->
-          <section id="preferences" class="rounded-xl border border-border bg-surface p-6 space-y-6">
+          <section id="preferences" class="rounded-xl border border-border bg-surface p-(--density-padding) flex flex-col gap-(--density-gap)">
             <div class="space-y-1">
               <h2 class="text-base font-semibold text-foreground">Preferences</h2>
               <p class="text-sm text-muted">Customise display and data preferences.</p>

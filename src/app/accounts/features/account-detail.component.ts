@@ -31,7 +31,7 @@ import { CreateTransactionModalComponent } from './create-transaction-modal.comp
   template: `
     @let account = accountState.items()[0];
 
-    <div class="flex flex-col gap-6">
+    <div class="flex flex-col gap-(--density-gap)">
       <a
         routerLink="/dashboard"
         class="flex w-fit items-center gap-1 text-sm text-muted transition-colors hover:text-foreground"
@@ -79,7 +79,7 @@ import { CreateTransactionModalComponent } from './create-transaction-modal.comp
         <app-performance-chart [data]="performanceState.items()" />
       </app-section-shell>
 
-      <div class="grid grid-cols-1 gap-6 lg:grid-cols-2">
+      <div class="grid grid-cols-1 gap-(--density-gap) lg:grid-cols-2">
         <app-section-shell
           title="Holdings"
           [loading]="holdingsState.loading()"

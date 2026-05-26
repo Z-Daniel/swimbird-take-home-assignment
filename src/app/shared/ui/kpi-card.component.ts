@@ -4,7 +4,7 @@ import { ChangeDetectionStrategy, Component, input } from '@angular/core';
   selector: 'app-kpi-card',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
-    <div class="rounded-xl border border-border bg-surface px-5 py-4">
+    <div class="rounded-xl border border-border bg-surface p-(--density-padding)">
       @if (loading()) {
         <div class="space-y-2 animate-pulse">
           <div class="h-3 w-24 rounded bg-border"></div>

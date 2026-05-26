@@ -21,11 +21,11 @@ import { DashboardStateService } from '../services/dashboard-state.service';
     @let accounts = state.accountsState;
     @let performance = state.performanceState;
 
-    <div class="flex flex-col gap-6">
+    <div class="flex flex-col gap-(--density-gap)">
 
       <app-portfolio-kpi-strip />
 
-      <div class="grid grid-cols-1 gap-6 lg:grid-cols-[3fr_2fr]">
+      <div class="grid grid-cols-1 gap-(--density-gap) lg:grid-cols-[3fr_2fr]">
         <app-section-shell
           title="Performance"
           [loading]="performance.loading()"
