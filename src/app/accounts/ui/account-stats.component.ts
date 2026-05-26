@@ -34,9 +34,9 @@ export class AccountStatsComponent {
 
   /** Sum all holding market values in SEK — the pipe handles conversion to display currency. */
   protected readonly totalValueSEK = computed(() => {
-    const fallback = this.accountCurrency();
+    const currency = this.accountCurrency();
     return this.holdings().reduce(
-      (sum, h) => sum + toSEK(h.marketValue, h.currency ?? fallback),
+      (sum, h) => sum + toSEK(h.marketValue, currency),
       0,
     );
   });

@@ -76,7 +76,9 @@ import { CreateTransactionModalComponent } from './create-transaction-modal.comp
         emptyMessage="No performance data found."
         (retry)="performanceState.load()"
       >
-        <app-performance-chart [data]="performanceState.items()" />
+        @if (account) {
+          <app-performance-chart [data]="performanceState.items()" [sourceCurrency]="account.currency" />
+        }
       </app-section-shell>
 
       <div class="grid grid-cols-1 gap-(--density-gap) lg:grid-cols-2">

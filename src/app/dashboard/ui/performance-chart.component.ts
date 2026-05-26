@@ -11,7 +11,8 @@ import {
   ApexYAxis,
   ChartComponent,
 } from 'ng-apexcharts';
-import { fromSEK } from '../../core/fx';
+import { fromSEK, toSEK } from '../../core/fx';
+import { Currency } from '../../core/models/currency.model';
 import { SettingsService } from '../../core/services/settings.service';
 import { PerformancePoint } from '../models/performance.model';
 
@@ -38,13 +39,16 @@ export class PerformanceChartComponent {
   private readonly settings = inject(SettingsService);
 
   readonly data = input.required<PerformancePoint[]>();
+  /** Currency the raw data values are expressed in. Defaults to SEK (dashboard aggregate). */
+  readonly sourceCurrency = input<Currency>('SEK');
 
   protected readonly series = computed((): ApexAxisChartSeries => {
-    const currency = this.settings.currency();
+    const from = this.sourceCurrency();
+    const to = this.settings.currency();
     return [
       {
         name: 'Portfolio Value',
-        data: this.data().map((p) => ({ x: new Date(p.date).getTime(), y: fromSEK(p.value, currency) })),
+        data: this.data().map((p) => ({ x: new Date(p.date).getTime(), y: fromSEK(toSEK(p.value, from), to) })),
       },
     ];
   });

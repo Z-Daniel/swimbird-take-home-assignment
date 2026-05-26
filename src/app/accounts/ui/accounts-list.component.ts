@@ -5,12 +5,13 @@ import { Account } from '../models/account.model';
 import { AccountStatusPipe } from './account-status.pipe';
 import { TrendColorPipe } from '../../shared/ui/trend-color.pipe';
 import { ConvertCurrencyPipe } from '../../shared/ui/convert-currency.pipe';
+import { BadgeComponent } from '../../shared/ui/badge.component';
 import { SettingsService } from '../../core/services/settings.service';
 
 @Component({
   selector: 'app-accounts-list',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [RouterLink, DecimalPipe, TrendColorPipe, AccountStatusPipe, ConvertCurrencyPipe],
+  imports: [RouterLink, DecimalPipe, TrendColorPipe, AccountStatusPipe, ConvertCurrencyPipe, BadgeComponent],
   template: `
     <!-- Desktop table (md+) -->
     <div class="hidden md:block overflow-x-auto">
@@ -43,9 +44,7 @@ import { SettingsService } from '../../core/services/settings.service';
                 {{ account.changeToday >= 0 ? '+' : '' }}{{ account.changeToday | number:'1.2-2' }}%
               </td>
               <td class="py-3">
-                <span class="rounded-full px-2 py-0.5 text-xs font-medium" [class]="account.status | accountStatus">
-                  {{ account.status }}
-                </span>
+                <app-badge [classes]="account.status | accountStatus">{{ account.status }}</app-badge>
               </td>
             </tr>
           }

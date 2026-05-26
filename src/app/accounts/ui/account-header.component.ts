@@ -5,12 +5,13 @@ import { Account } from '../models/account.model';
 import { AccountStatusPipe } from './account-status.pipe';
 import { TrendColorPipe } from '../../shared/ui/trend-color.pipe';
 import { ConvertCurrencyPipe } from '../../shared/ui/convert-currency.pipe';
+import { BadgeComponent } from '../../shared/ui/badge.component';
 import { SettingsService } from '../../core/services/settings.service';
 
 @Component({
   selector: 'app-account-header',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [DecimalPipe, SlicePipe, StatTileComponent, AccountStatusPipe, TrendColorPipe, ConvertCurrencyPipe],
+  imports: [DecimalPipe, SlicePipe, StatTileComponent, AccountStatusPipe, TrendColorPipe, ConvertCurrencyPipe, BadgeComponent],
   template: `
     @let a = account();
     <div class="space-y-4">
@@ -18,12 +19,7 @@ import { SettingsService } from '../../core/services/settings.service';
         <h1 class="text-2xl font-bold text-foreground">{{ a.name }}</h1>
         <p class="mt-2 flex flex-wrap items-center gap-2 text-sm text-muted">
           {{ a.type }} · {{ a.currency }} · Opened {{ a.openedAt | slice:0:10 }} · {{ a.owner }}
-          <span
-            class="rounded-full px-2 py-0.5 text-xs font-medium"
-            [class]="a.status | accountStatus"
-          >
-            {{ a.status }}
-          </span>
+          <app-badge [classes]="a.status | accountStatus">{{ a.status }}</app-badge>
         </p>
       </div>
 

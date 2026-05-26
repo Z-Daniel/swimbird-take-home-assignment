@@ -1,5 +1,6 @@
 import { DecimalPipe, SlicePipe } from '@angular/common';
 import { ChangeDetectionStrategy, Component, input } from '@angular/core';
+import { BadgeComponent } from '../../shared/ui/badge.component';
 import { Transaction } from '../models/transaction.model';
 import { TransactionTypePipe } from './transaction-type.pipe';
 import { TrendColorPipe } from '../../shared/ui/trend-color.pipe';
@@ -7,7 +8,7 @@ import { TrendColorPipe } from '../../shared/ui/trend-color.pipe';
 @Component({
   selector: 'app-transactions-list',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [DecimalPipe, SlicePipe, TransactionTypePipe, TrendColorPipe],
+  imports: [DecimalPipe, SlicePipe, TransactionTypePipe, TrendColorPipe, BadgeComponent],
   template: `
     <!-- Desktop table (md+) -->
     <div class="hidden md:block overflow-x-auto">
@@ -25,9 +26,7 @@ import { TrendColorPipe } from '../../shared/ui/trend-color.pipe';
             <tr class="border-b border-border">
               <td class="py-3 pr-4 text-muted">{{ tx.date | slice:0:10 }}</td>
               <td class="py-3 pr-4">
-                <span class="rounded-full px-2 py-0.5 text-xs font-medium" [class]="tx.type | transactionType">
-                  {{ tx.type }}
-                </span>
+                <app-badge [classes]="tx.type | transactionType">{{ tx.type }}</app-badge>
               </td>
               <td class="py-3 pr-4 text-right font-medium" [class]="tx.amount | trendColor">
                 {{ tx.amount >= 0 ? '+' : '' }}{{ tx.amount | number:'1.2-2' }}
@@ -46,9 +45,7 @@ import { TrendColorPipe } from '../../shared/ui/trend-color.pipe';
           <div class="flex items-start justify-between gap-3">
             <div class="min-w-0">
               <div class="flex items-center gap-2">
-                <span class="rounded-full px-2 py-0.5 text-xs font-medium" [class]="tx.type | transactionType">
-                  {{ tx.type }}
-                </span>
+                <app-badge [classes]="tx.type | transactionType">{{ tx.type }}</app-badge>
                 <span class="text-xs text-muted">{{ tx.date | slice:0:10 }}</span>
               </div>
               <p class="mt-1 truncate text-sm text-muted">{{ tx.description }}</p>
