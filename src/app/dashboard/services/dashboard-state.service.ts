@@ -57,8 +57,8 @@ export class DashboardStateService {
 
   readonly cashPercent = computed(() => {
     const accounts = this.accountsState.items();
-    const totalSEK = accounts.reduce((sum, a) => sum + toSEK(a.balance, a.currency), 0);
-    if (totalSEK === 0) return 0;
+    const totalSEK = this.totalValueInSEK();
+    if (totalSEK === 0 || totalSEK === null) return 0;
     const cashSEK = accounts
       .filter((a) => a.type === 'Cash')
       .reduce((sum, a) => sum + toSEK(a.balance, a.currency), 0);

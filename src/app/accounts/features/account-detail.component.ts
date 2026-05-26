@@ -64,8 +64,8 @@ import { CreateTransactionModalComponent } from './create-transaction-modal.comp
       </div>
 
       @let holdings = holdingsState.items();
-      @if (holdings.length > 0) {
-        <app-account-stats [holdings]="holdings" />
+      @if (account && holdings.length > 0) {
+        <app-account-stats [holdings]="holdings" [accountCurrency]="account.currency" />
       }
 
       <app-section-shell
@@ -88,7 +88,9 @@ import { CreateTransactionModalComponent } from './create-transaction-modal.comp
           emptyMessage="No holdings found."
           (retry)="holdingsState.load()"
         >
-          <app-account-holdings-list [holdings]="holdings" />
+          @if (account) {
+            <app-account-holdings-list [holdings]="holdings" [accountCurrency]="account.currency" />
+          }
         </app-section-shell>
 
         @let transactions = transactionsState.items();

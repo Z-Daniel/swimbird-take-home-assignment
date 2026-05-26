@@ -17,6 +17,8 @@ import { TrendColorPipe } from '../../shared/ui/trend-color.pipe';
         [loading]="state.kpiLoading()"
         valueClass="flex items-baseline gap-2"
       >
+      @let totalValue = state.totalValue();
+      @if (totalValue !== null) {
         <span class="text-2xl font-bold text-foreground">
           {{ state.totalValue() | number:'1.0-0' }} {{ state.currency() }}
         </span>
@@ -26,13 +28,20 @@ import { TrendColorPipe } from '../../shared/ui/trend-color.pipe';
             {{ change >= 0 ? '+' : '' }}{{ change | number:'1.2-2' }}%
           </span>
         }
+      } @else {
+        —
+      }
       </app-kpi-card>
 
       <app-kpi-card
         label="Cash"
         [loading]="state.kpiLoading()"
       >
-        {{ state.cashPercent() | number:'1.1-1' }}%
+        @if (state.cashPercent() !== null) {
+          {{ state.cashPercent() | number:'1.1-1' }}%
+        } @else {
+          —
+        }
       </app-kpi-card>
 
       <app-kpi-card
