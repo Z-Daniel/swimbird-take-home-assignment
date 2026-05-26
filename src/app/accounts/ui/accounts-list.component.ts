@@ -37,8 +37,7 @@ import { SettingsService } from '../../core/services/settings.service';
               <td class="hidden lg:table-cell py-3 pr-4 text-muted">{{ account.type }}</td>
               <td class="hidden lg:table-cell py-3 pr-4 text-muted">{{ account.currency }}</td>
               <td class="py-3 pr-4 text-right font-medium text-foreground">
-                {{ account.balance | convertCurrency:account.currency:displayCurrency() | number:'1.0-0' }}
-                {{ displayCurrency() }}
+                {{ account.balance | convertCurrency:account.currency:displayCurrency() }}
               </td>
               <td class="py-3 pr-4 text-right" [class]="account.changeToday | trendColor">
                 {{ account.changeToday >= 0 ? '+' : '' }}{{ account.changeToday | number:'1.2-2' }}%
@@ -73,8 +72,7 @@ import { SettingsService } from '../../core/services/settings.service';
             </div>
             <div class="mt-3 flex items-end justify-between">
               <p class="text-lg font-semibold text-foreground">
-                {{ account.balance | convertCurrency:account.currency:displayCurrency() | number:'1.0-0' }}
-                {{ displayCurrency() }}
+                {{ account.balance | convertCurrency:account.currency:displayCurrency() }}
               </p>
               <p class="text-sm font-medium" [class]="account.changeToday | trendColor">
                 {{ account.changeToday >= 0 ? '+' : '' }}{{ account.changeToday | number:'1.2-2' }}%

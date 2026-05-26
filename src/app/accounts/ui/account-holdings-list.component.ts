@@ -30,8 +30,7 @@ import { Holding } from '../models/holding.model';
               <td class="py-3 pr-4 text-muted">{{ holding.name }}</td>
               <td class="py-3 pr-4 text-right text-foreground">{{ holding.quantity | number:'1.0-0' }}</td>
               <td class="py-3 pr-4 text-right font-medium text-foreground">
-                {{ holding.marketValue | convertCurrency:from:displayCurrency() | number:'1.0-0' }}
-                {{ displayCurrency() }}
+                {{ holding.marketValue | convertCurrency:from:displayCurrency() }}
               </td>
               <td class="py-3 text-right text-muted">
                 {{ holding.weight | number:'1.1-1' }}%
@@ -54,8 +53,7 @@ import { Holding } from '../models/holding.model';
           </div>
           <div class="shrink-0 text-right">
             <p class="font-medium text-foreground">
-              {{ holding.marketValue | convertCurrency:from:displayCurrency() | number:'1.0-0' }}
-              {{ displayCurrency() }}
+              {{ holding.marketValue | convertCurrency:from:displayCurrency() }}
             </p>
             <p class="text-xs text-muted">{{ holding.weight | number:'1.1-1' }}%</p>
           </div>

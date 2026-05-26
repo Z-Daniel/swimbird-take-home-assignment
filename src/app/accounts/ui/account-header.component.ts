@@ -29,7 +29,7 @@ import { SettingsService } from '../../core/services/settings.service';
 
       <dl class="flex flex-wrap gap-6">
         <app-stat-tile label="Balance" valueClass="text-2xl font-bold text-foreground">
-          {{ a.balance | convertCurrency:a.currency:displayCurrency() | number:'1.0-0' }} {{ displayCurrency() }}
+          {{ a.balance | convertCurrency:a.currency:displayCurrency() }}
         </app-stat-tile>
         <app-stat-tile label="Change today" [valueClass]="'text-2xl font-bold ' + (a.changeToday | trendColor)">
           {{ a.changeToday >= 0 ? '+' : '' }}{{ a.changeToday | number:'1.2-2' }}%
