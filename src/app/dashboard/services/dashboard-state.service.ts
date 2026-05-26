@@ -30,19 +30,26 @@ export class DashboardStateService {
     () => this.accountsState.loading() || this.performanceState.loading(),
   );
 
+  private readonly totalValueInSEK = computed(() => {
+    const accounts = this.accountsState.items();
+    if (accounts.length === 0) return null;
+    return this.accountsState.items().reduce((sum, a) => sum + toSEK(a.balance, a.currency), 0);
+  });
+
   readonly totalValue = computed(() => {
     const currency = this.settings.currency();
+    const totalValueInSEK = this.totalValueInSEK();
+    if (totalValueInSEK === null) return null;
     return fromSEK(
-      this.accountsState.items().reduce((sum, a) => sum + toSEK(a.balance, a.currency), 0),
+      totalValueInSEK,
       currency,
     );
   });
 
   readonly changeToday = computed((): number | null => {
+    const totalSEK = this.totalValueInSEK();
     const accounts = this.accountsState.items();
-    if (accounts.length === 0) return null;
-    const totalSEK = accounts.reduce((sum, a) => sum + toSEK(a.balance, a.currency), 0);
-    if (totalSEK === 0) return null;
+    if (totalSEK === null || totalSEK === 0 || accounts.length === 0) return null;
     return (
       accounts.reduce((sum, a) => sum + toSEK(a.balance, a.currency) * a.changeToday, 0) / totalSEK
     );
