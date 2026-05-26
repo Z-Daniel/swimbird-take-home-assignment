@@ -109,7 +109,7 @@ import { CreateTransactionModalComponent } from './create-transaction-modal.comp
       </div>
     </div>
 
-<app-create-transaction-modal
+    <app-create-transaction-modal
       [account]="account"
       (transactionCreated)="onTransactionCreated($event)"
     />

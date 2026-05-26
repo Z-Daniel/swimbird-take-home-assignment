@@ -3,11 +3,12 @@ import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { DashboardStateService } from '../services/dashboard-state.service';
 import { KpiCardComponent } from '../../shared/ui/kpi-card.component';
 import { TrendColorPipe } from '../../shared/ui/trend-color.pipe';
+import { SignedNumberPipe } from '../../shared/ui/signed-number.pipe';
 
 @Component({
   selector: 'app-portfolio-kpi-strip',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [DecimalPipe, TrendColorPipe, KpiCardComponent],
+  imports: [DecimalPipe, TrendColorPipe, KpiCardComponent, SignedNumberPipe],
   template: `
     <dl class="grid grid-cols-2 gap-(--density-gap) lg:grid-cols-3">
 
@@ -25,7 +26,7 @@ import { TrendColorPipe } from '../../shared/ui/trend-color.pipe';
         @let change = state.changeToday();
         @if (change !== null) {
           <span class="text-sm font-medium" [class]="change | trendColor">
-            {{ change >= 0 ? '+' : '' }}{{ change | number:'1.2-2' }}%
+            {{ change | signedNumber }}%
           </span>
         }
       } @else {
@@ -51,7 +52,7 @@ import { TrendColorPipe } from '../../shared/ui/trend-color.pipe';
       >
         @let ytd = state.ytdReturn();
         @if (ytd !== null) {
-          {{ ytd >= 0 ? '+' : '' }}{{ ytd | number:'1.2-2' }}%
+          {{ ytd | signedNumber }}%
         } @else {
           —
         }

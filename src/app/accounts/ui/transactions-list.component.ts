@@ -1,6 +1,7 @@
 import { DecimalPipe, SlicePipe } from '@angular/common';
 import { ChangeDetectionStrategy, Component, input } from '@angular/core';
 import { BadgeComponent } from '../../shared/ui/badge.component';
+import { SignedNumberPipe } from '../../shared/ui/signed-number.pipe';
 import { Transaction } from '../models/transaction.model';
 import { TransactionTypePipe } from './transaction-type.pipe';
 import { TrendColorPipe } from '../../shared/ui/trend-color.pipe';
@@ -8,7 +9,7 @@ import { TrendColorPipe } from '../../shared/ui/trend-color.pipe';
 @Component({
   selector: 'app-transactions-list',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [DecimalPipe, SlicePipe, TransactionTypePipe, TrendColorPipe, BadgeComponent],
+  imports: [SlicePipe, TransactionTypePipe, TrendColorPipe, BadgeComponent, SignedNumberPipe],
   template: `
     <!-- Desktop table (md+) -->
     <div class="hidden md:block overflow-x-auto">
@@ -29,7 +30,7 @@ import { TrendColorPipe } from '../../shared/ui/trend-color.pipe';
                 <app-badge [classes]="tx.type | transactionType">{{ tx.type }}</app-badge>
               </td>
               <td class="py-3 pr-4 text-right font-medium" [class]="tx.amount | trendColor">
-                {{ tx.amount >= 0 ? '+' : '' }}{{ tx.amount | number:'1.2-2' }}
+                {{ tx.amount | signedNumber }}
               </td>
               <td class="hidden lg:table-cell py-3 text-muted">{{ tx.description }}</td>
             </tr>
@@ -51,7 +52,7 @@ import { TrendColorPipe } from '../../shared/ui/trend-color.pipe';
               <p class="mt-1 truncate text-sm text-muted">{{ tx.description }}</p>
             </div>
             <p class="shrink-0 font-medium" [class]="tx.amount | trendColor">
-              {{ tx.amount >= 0 ? '+' : '' }}{{ tx.amount | number:'1.2-2' }}
+              {{ tx.amount | signedNumber }}
             </p>
           </div>
         </li>

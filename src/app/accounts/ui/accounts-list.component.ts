@@ -1,5 +1,5 @@
-import { DecimalPipe } from '@angular/common';
 import { ChangeDetectionStrategy, Component, inject, input } from '@angular/core';
+import { SignedNumberPipe } from '../../shared/ui/signed-number.pipe';
 import { Router, RouterLink } from '@angular/router';
 import { Account } from '../models/account.model';
 import { AccountStatusPipe } from './account-status.pipe';
@@ -11,7 +11,7 @@ import { SettingsService } from '../../core/services/settings.service';
 @Component({
   selector: 'app-accounts-list',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [RouterLink, DecimalPipe, TrendColorPipe, AccountStatusPipe, ConvertCurrencyPipe, BadgeComponent],
+  imports: [RouterLink, TrendColorPipe, AccountStatusPipe, ConvertCurrencyPipe, BadgeComponent, SignedNumberPipe],
   template: `
     <!-- Desktop table (md+) -->
     <div class="hidden md:block overflow-x-auto">
@@ -41,7 +41,7 @@ import { SettingsService } from '../../core/services/settings.service';
                 {{ account.balance | convertCurrency:account.currency:displayCurrency() }}
               </td>
               <td class="py-3 pr-4 text-right" [class]="account.changeToday | trendColor">
-                {{ account.changeToday >= 0 ? '+' : '' }}{{ account.changeToday | number:'1.2-2' }}%
+                {{ account.changeToday | signedNumber }}%
               </td>
               <td class="py-3">
                 <app-badge [classes]="account.status | accountStatus">{{ account.status }}</app-badge>
@@ -74,7 +74,7 @@ import { SettingsService } from '../../core/services/settings.service';
                 {{ account.balance | convertCurrency:account.currency:displayCurrency() }}
               </p>
               <p class="text-sm font-medium" [class]="account.changeToday | trendColor">
-                {{ account.changeToday >= 0 ? '+' : '' }}{{ account.changeToday | number:'1.2-2' }}%
+                {{ account.changeToday | signedNumber }}%
               </p>
             </div>
           </a>

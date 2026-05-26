@@ -1,4 +1,5 @@
-import { DecimalPipe, SlicePipe } from '@angular/common';
+import { SlicePipe } from '@angular/common';
+import { SignedNumberPipe } from '../../shared/ui/signed-number.pipe';
 import { ChangeDetectionStrategy, Component, inject, input } from '@angular/core';
 import { StatTileComponent } from '../../shared/ui/stat-tile.component';
 import { Account } from '../models/account.model';
@@ -11,7 +12,7 @@ import { SettingsService } from '../../core/services/settings.service';
 @Component({
   selector: 'app-account-header',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [DecimalPipe, SlicePipe, StatTileComponent, AccountStatusPipe, TrendColorPipe, ConvertCurrencyPipe, BadgeComponent],
+  imports: [SlicePipe, StatTileComponent, AccountStatusPipe, TrendColorPipe, ConvertCurrencyPipe, BadgeComponent, SignedNumberPipe],
   template: `
     @let a = account();
     <div class="space-y-4">
@@ -28,7 +29,7 @@ import { SettingsService } from '../../core/services/settings.service';
           {{ a.balance | convertCurrency:a.currency:displayCurrency() }}
         </app-stat-tile>
         <app-stat-tile label="Change today" [valueClass]="'text-2xl font-bold ' + (a.changeToday | trendColor)">
-          {{ a.changeToday >= 0 ? '+' : '' }}{{ a.changeToday | number:'1.2-2' }}%
+          {{ a.changeToday | signedNumber }}%
         </app-stat-tile>
         <app-stat-tile label="Risk level" valueClass="text-2xl font-bold text-foreground">
           {{ a.riskLevel }}
